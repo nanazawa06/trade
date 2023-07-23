@@ -11,6 +11,7 @@ use App\Models\Area;
 use App\Models\Post;
 use App\Models\Review;
 use App\Models\Chat;
+use App\Models\Proposal;
 
 class User extends Authenticatable
 {
@@ -66,5 +67,9 @@ class User extends Authenticatable
     public function receive_reviews()
     {
         return $this->hasMany(Review::class, 'receiver_id');
+    }
+    public function proposals()
+    {
+        return $this->hasMany(Proposal::class);
     }
 }
