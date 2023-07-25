@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class AreaTableSeeder extends Seeder
 {
@@ -25,8 +26,8 @@ class AreaTableSeeder extends Seeder
         ];
 
         foreach ($prefectures as $prefecture) {
-            DB::table('prefectures')->insert([
-                'name' => $prefecture,
+            DB::table('areas')->insert([
+                'prefecture' => $prefecture,
             ]);
         }
     }

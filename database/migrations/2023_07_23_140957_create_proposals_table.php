@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('proposals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id')->constrained('users');
-            $table->foreignId('receiver_id')->constrained('users');
-            $table->string('comment')->nullable();
-            $table->integer('score');
-            $table->timestamps();
-            
+            $table->foreignId('post_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->string('give_item');
+            $table->string('want_item');
+            $table->timestamp('created_at');
+            $table->softDeletes();
         });
     }
 
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('proposals');
     }
 };
