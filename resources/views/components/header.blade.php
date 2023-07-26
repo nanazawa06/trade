@@ -19,7 +19,7 @@
             <div><h2 class="text-2xl">GoodsTrade</h2></div>
         </div>
         <nav class="ml-auto mr-0 col-span-6 flex flex-wrap items-center text-base justify-end md:flex">
-            <span class=""><button class="bg-blue-100 rounded-lg mr-5 border border-indigo-300">出品</button></span>
+            <span class=""><a href="/posts/create"><button class="bg-blue-100 rounded-lg mr-5 border border-indigo-300">出品</button></a></span>
            @guest
                 <span class="rounded-lg"><a href="/register" class="mr-5 hover:text-gray-900">会員登録</a></span>
                 <span class="rounded-lg"><a href="/login" class="mr-5 hover:text-gray-900">ログイン</a></span>

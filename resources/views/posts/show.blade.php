@@ -2,24 +2,24 @@
     <div>
         <div class="flex font-sans gap-x-3">
             <div class="preview-box flex-row relative gap-y-1">
-                @foreach ($post->image as $image)
+                @foreach ( $post->images as $image )
                     <div class="flex-none w-40 relative">
-                        <img src="{{ $image->iamge_url }}" alt="サムネイル" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                        <img src="{{ $image->image_url }}" alt="サムネイル" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                     </div>
                 @endforeach
             </div>
             <div class="top-preview flex-none w-48 relative">
-                <img src="{{ $post->image[0]->image_url }}" alt="" id="mainImage" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                <img src="{{ $post->images[0]->image_url }}" alt="" id="mainImage" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="flex-auto p-6">
                 <div class="flex flex-wrap">
                     <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                        @foreach ($post->want as $want)
-                            {{ $want->item->item }}
+                        @foreach ($post->wants as $want)
+                            {{ $want->item }}
                         @endforeach
                     </h1>
                     <h1 class="flex-auto text-lg font-semibold text-slate-900">
-                        @foreach ($post->give as $give)
+                        @foreach ($post->gives as $give)
                             {{ $give->item->item }}
                         @endforeach
                     </h1>
@@ -35,7 +35,8 @@
               <div class="flex flex-col h-full overflow-x-auto mb-4">
                 <div class="flex flex-col h-full">
                   <div class="grid grid-cols-12 gap-y-2">
-                    @foreach ($post->shat as $chat)
+                    @if (!$post->chats)
+                    @foreach ($post->shats as $chat)
                         @if ($chat->user_id != Auth::user()->id)
                             <div class="col-start-1 col-end-8 p-3 rounded-lg">
                               <div class="flex flex-row items-center">
@@ -58,7 +59,9 @@
                                 </div>
                               </div>
                             </div>
+                        @endif
                     @endforeach
+                    @endif
                   </div>
                 </div>
               </div>
@@ -68,15 +71,21 @@
                   <div class="relative w-full">
                     <input
                       type="text"
+                      name="chat[message]"
                       class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
                     />
                   </div>
                 </div>
                 <div class="ml-4">
+                 <form action="/posts/{{ $post->id }}" method="POST">
+                @csrf
+                @method('PUT')
                   <button
+                    name="chat[post_id]"
+                    value="{{ $post->id }}"
                     class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
                   >
-                    <span>コメント</span>
+                    <span>コメントする</span>
                     <span class="ml-2">
                       <svg
                         class="w-4 h-4 transform rotate-45 -mt-px"
@@ -116,7 +125,7 @@
                            状態
                         </td>
                         <td class="p-4">
-                            
+                            {{ $post->state->state }}
                         </td>
                      </tr>
                      <tr class="border-b hover:bg-gray-50">
@@ -124,7 +133,7 @@
                            発送元の地域
                         </td>
                         <td class="p-4">
-                           {{ $post->user->prefecture }} 
+                           {{ $post->user->area->prefecture }} 
                         </td>
                      </tr>
                   </tbody>

@@ -39,6 +39,15 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <div>
+                    <select name="area_id" class="p-3 rounded border border-gray-300">
+                        <option value="">所在地</option>
+                        @foreach ($areas as $prefecture)
+                            <option class="p-2 block" value="{{ $prefecture->id }}">{{ $prefecture->name }}</option>
+                        @endforeach
+                    </select>
+        </div>
+        
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}

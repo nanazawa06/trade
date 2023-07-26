@@ -1,5 +1,6 @@
 <x-header>
-    <form class="py-6 px-9" action="index" method="POST">
+    <form class="py-6 px-9" action="/posts" method="POST" enctype="multipart/form-data">
+      @csrf
         <div class="top-preview w-200 relative"></div>
         <div class="preview-box flex flex-wrap gap-1 m-2"></div> 
         <div class="mb-6 pt-4">
@@ -8,7 +9,7 @@
             </label>
     
             <div class="mb-8">
-              　<input type="file" name="file" id="file" accept="image/*" class="sr-only" />
+              　<input type="file" name="images" accept="image/*" multiple class="sr-only" />
               　<label
                 for="file" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                 <div>
@@ -38,8 +39,7 @@
                           </label>
                           <input
                             type=""
-                            name="want"
-                            id="want"
+                            name="gives[]"
                             placeholder="譲りたいものを記入してください"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                           />
@@ -53,8 +53,7 @@
                           </label>
                           <input
                             type=""
-                            name="give"
-                            id="give"
+                            name="wants[]"
                             placeholder="欲しいものを記入してください"
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                           />
@@ -63,6 +62,7 @@
                   <div class="mb-6">
                       <textarea
                           rows="6"
+                          name="description"
                           placeholder="詳細を記入してください"
                           class="
                           w-full
@@ -90,7 +90,7 @@
                             出品者 
                           </td>
                           <td class="p-4">
-                            {{ $user->name }}
+                            
                           </td>
                       </tr>
                       <tr class="border-b hover:bg-gray-50">
@@ -98,7 +98,12 @@
                             状態
                           </td>
                           <td class="p-4">
-                              
+                            <select name="state_id" class="p-3 rounded border border-gray-300">
+                                <option>状態を選択</option>
+                                @foreach ($states as $state)
+                                    <option class="p-2 block hover:bg-grey-light sursor-pointer" value="{{ $state->id }}">{{ $state->state }}</option>
+                                @endforeach
+                            </select>
                           </td>
                       </tr>
                       <tr class="border-b hover:bg-gray-50">
@@ -106,7 +111,7 @@
                             発送元の地域
                           </td>
                           <td class="p-4">
-                            {{ $user->prefecture }} 
+                            
                           </td>
                       </tr>
                   </tbody>
@@ -117,4 +122,5 @@
           <input type=submit value="出品する" class="bg-orange-500 border border-gray-300 text-white-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5">
       </div>
     </form>
+    <script src="/js/app.js"></script>
 </x-header>
