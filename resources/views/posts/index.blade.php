@@ -29,10 +29,10 @@
          @foreach($posts as $post)
             <div class="rounded border shadow-md">
                 <div class="rounded w-50 h-50 m-2 border shadow-md overflow-hidden">
-                    <a href="/posts/{{ $post->id }}"><img src="{{ $post->images[0]->image_url }} " alt="画像が読み込めません。"/></a>
+                    <a href="/posts/{{ $post->id }}"><img src="{{ $post->images[0]->image_url  }}" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
-                    <p class="flex-auto text-lg font-semibold text-slate-900"><a href="/posts/{{ $post->id }}">求：{{$post->wants[0]->name }}</a></p>
+                    <p class="flex-auto text-lg font-semibold text-slate-900"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
                 </div>
             </div>
         @endforeach

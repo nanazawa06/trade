@@ -26,4 +26,8 @@ class Chat extends Model
     {
         return $this->belongsTo(Post::class);
     }
+    public function chatable()
+    {
+        return $this->morphTo();
+    }
 }

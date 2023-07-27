@@ -8,6 +8,7 @@ use App\Models\Area;
 use App\Models\State;
 use App\Models\Item;
 use Cloudinary;
+use App\Models\Chat;
 
 class PostController extends Controller
 {
@@ -43,13 +44,13 @@ class PostController extends Controller
         
             $images = $request->file('images');
             //dd($images);
-            //foreach ($images as $image) {
-                 $image_url = Cloudinary::upload($images->getRealPath())->getSecurePath();
+            foreach ($images as $image) {
+                 $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
                 // Imageモデルにデータを保存
                 $post->images()->create([
                     'image_url' => $image_url,
                 ]);
-                //}
+                }
         
         //欲しいグッズ一覧をitemsテーブルに保存
         
@@ -59,14 +60,24 @@ class PostController extends Controller
             $want = Item::firstOrCreate(['name' => $item_name]);
             $post->wants()->attach($want->id);
         }
+        
+        $gives = $request['gives'];
+        foreach ($gives as $item_name)
+        {
+            $give = Item::firstOrCreate(['name' => $item_name]);
+            $post->gives()->attach($give->id);
+        }
         return redirect('/posts/' . $post->id);
     }
     
     public function message(Post $post, Chat $chat, Request $request)
     {
          //messageをchatsテーブルに保存
-        $iput_chat = $request['chat'];
-        $chat->fill($input_chat)->save();
+        $input_chat = $request['chat'];
+        $post->chats()->create([
+                    'user_id' => $input_chat['user_id'],
+                    'message' => $input_chat['message'],
+                ]);
         /* 
         $chat->message = $request('message');
         $chat->user_id = $user->id;

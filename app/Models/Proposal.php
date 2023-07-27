@@ -24,4 +24,8 @@ class Proposal extends Model
     {
         return $this->belongsTo(Post::class);
     }
+    public function chats()
+    {
+        return $this->morphMany(Chat::class, 'chatable');
+    }
 }
