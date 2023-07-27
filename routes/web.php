@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::controller(PostController::class)->group(function(){
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
 });
 
-Route::get('/users/{user}',  [UserController::class,'getUserPosts']);
+Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
 
 Route::get('/dashboard', function () {
     return view('/dashbord');

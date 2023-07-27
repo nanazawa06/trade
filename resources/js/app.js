@@ -6,7 +6,7 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-
+console.log('test');
 document.addEventListener('DOMContentLoaded', function() {
         const uploadBox = document.querySelector(".upload-box");
         const previewBox = document.querySelector(".preview-box");
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
         }
-
+        
         function dragover(e){ // ドラッグした時に背景色を変える
             e.stopPropagation();
             e.preventDefault();
@@ -108,5 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         uploadBox.addEventListener("dragover", dragover, false);
         // ドラッグがエリアから離れた時の処理
         uploadBox.addEventListener("dragleave", dragleave, false);
+        console.log('test');
         
     });
