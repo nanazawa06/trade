@@ -9,7 +9,7 @@
             </label>
     
             <div class="mb-8">
-              　<input type="file" name="images" accept="image/*" multiple class="sr-only" />
+              　<input type="file" name="images[]" accept="image/*" multiple class="sr-only" />
               　<label
                 for="file" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                 <div>

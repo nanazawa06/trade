@@ -29,8 +29,10 @@ Route::controller(PostController::class)->group(function(){
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
 });
 
+Route::get('/users/{user}',  [UserController::class,'getUserPosts']);
+
 Route::get('/dashboard', function () {
-    return view('posts.index');
+    return view('/dashbord');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
