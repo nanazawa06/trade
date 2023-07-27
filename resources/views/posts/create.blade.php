@@ -8,10 +8,10 @@
               Upload File
             </label>
     
-            <div class="mb-8">
-              　<input type="file" name="images[]" accept="image/*" multiple class="sr-only" />
+            <div class=" mb-8">
+              　<input type="file" name="images[]" id="input" accept="image/*" multiple class="sr-only" />
               　<label
-                for="file" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
+                for="input" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
                 <div>
                       <span class="mb-2 block text-xl font-semibold text-[#07074D]">
                         Drop files here
@@ -122,5 +122,4 @@
           <input type=submit value="出品する" class="bg-orange-500 border border-gray-300 text-white-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5">
       </div>
     </form>
-    <script src="/js/app.js"></script>
 </x-header>
