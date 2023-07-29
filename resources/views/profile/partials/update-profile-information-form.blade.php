@@ -13,10 +13,26 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
+        <div>
+            <x-picture-input />
+            <x-input-error class="mt-2" :messages="$errors->get('picture')" />
+        </div>
+        
+        <div>
+            <x-input-label for="profile" :value="__('Profile')" />
+            <textarea
+              rows="4"
+              name="profile"
+              id="profile"
+              class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-4 text-base font-medium shadow-sm text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+              autofocus
+            >{{ $user->profile }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('profile')" />
+        </div>
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
