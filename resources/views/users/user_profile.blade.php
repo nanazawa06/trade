@@ -2,9 +2,11 @@
         <div class="flex">
             <div class="flex flex-1 items-center gap-x-3 p-6">
                 <div class=""><a href="/">
-                    <svg class="h-8 w-8 text-green-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
-                  　</svg></a>
+                    <img
+                     id="preview"
+                     src="{{ Auth::user()->profile_icon ? Auth::user()->profile_icon : asset('images/user_icon.png') }}"
+                     alt=""
+                     class="w-16 h-16 rounded-full object-cover border-none bg-gray-200"></a>
                 </div>
                 <div class="flex flex-col">
                     <div><h2 class="text-2xl">{{ $user->name}}</h2></div>
@@ -17,7 +19,7 @@
             </div>
             <div class="ml-auto mr-0 col-span-6 flex flex-wrap items-center text-base justify-end md:flex">
                 @if(Auth::check() && $user->id == Auth::user()->id)
-                <a href="users/edit/{{$user->id}}"><button class="bg-blue-100 rounded-lg mr-5 border border-indigo-300">プロフィールを編集</button></a>
+                <a href="{{ route('profile.edit') }}"><button class="bg-blue-100 rounded-lg mr-5 border border-indigo-300">プロフィールを編集</button></a>
                 @endif
             </div>
         </div>

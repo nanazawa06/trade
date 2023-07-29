@@ -22,8 +22,8 @@
                 <span class="rounded-lg"><a href="/register" class="mr-5 hover:text-gray-900">会員登録</a></span>
                 <span class="rounded-lg"><a href="/login" class="mr-5 hover:text-gray-900">ログイン</a></span>
             @else
-                <span class="rounded-lg"><a href="/mypage" class="mr-5 hover:text-gray-900">マイページ</a></span>
-            @endguest         
+                <span class="rounded-lg"><a href="{{route('user_page', ['user' => Auth::user()->id])}}" class="mr-5 hover:text-gray-900">マイページ</a></span>
+            @endguest                   
         </nav>
         <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <x-dropdown align="right" width="48">

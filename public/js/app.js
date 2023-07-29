@@ -3166,6 +3166,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
+console.log('test');
 document.addEventListener('DOMContentLoaded', function () {
   var uploadBox = document.querySelector(".upload-box");
   var previewBox = document.querySelector(".preview-box");
@@ -3266,6 +3267,7 @@ document.addEventListener('DOMContentLoaded', function () {
   uploadBox.addEventListener("dragover", dragover, false);
   // ドラッグがエリアから離れた時の処理
   uploadBox.addEventListener("dragleave", dragleave, false);
+  console.log('test');
 });
 
 /***/ }),
