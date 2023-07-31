@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProposalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,9 +29,18 @@ Route::controller(PostController::class)->group(function(){
     Route::put('/posts/{post}', 'message')->name('message');
     Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
+    Route::get('/posts/{post}/deal', 'deal')->name('deal');
+    Route::post('/posts/{post}/deal', 'startDeal')->name('start.deal');
+    Route::put('/posts/{post}/deal', 'message')->name('deal.message');
+    Route::post('/users/reviews', 'review')->name('review');
+   
 });
 
 Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
+
+Route::get('/users/requests',  [ProposalController::class,'indexRequests'])->name('index.requests');
+Route::post('/users/requests',  [ProposalController::class,'storeRequest'])->name('store.request');
+
 
 Route::get('/dashboard', function () {
     return view('/dashbord');

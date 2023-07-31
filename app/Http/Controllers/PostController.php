@@ -9,6 +9,8 @@ use App\Models\State;
 use App\Models\Item;
 use Cloudinary;
 use App\Models\Chat;
+use App\Models\Review;
+use App\Models\Proposal;
 
 class PostController extends Controller
 {
@@ -32,6 +34,17 @@ class PostController extends Controller
 
     public function store(Post $post, Request $request)
     {
+        //画像をimagesテーブルに保存
+        $images = $request->file('images');
+        //dd($images);
+        foreach ($images as $image) {
+             $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
+            // Imageモデルにデータを保存
+            $post->images()->create([
+                'image_url' => $image_url,
+            ]);
+            }
+        
         //user_idとdescriptionをpostsテーブルに保存
         $post = new Post();
         $post->description = $request->input('description');
@@ -39,18 +52,6 @@ class PostController extends Controller
         $post->user_id = $user->id;
         $post->state_id = $request->input('state_id');
         $post->save();
-        
-        //画像をimagesテーブルに保存
-        
-            $images = $request->file('images');
-            //dd($images);
-            foreach ($images as $image) {
-                 $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
-                // Imageモデルにデータを保存
-                $post->images()->create([
-                    'image_url' => $image_url,
-                ]);
-                }
         
         //欲しいグッズ一覧をitemsテーブルに保存
         
@@ -84,6 +85,54 @@ class PostController extends Controller
         $chat->post_id = $request('post_id');
         $chat->save();
         */
-        return redirect("/posts/" . $post->id);
+        return (!$request->has('chat[proposal_id]')) ? redirect("/posts/" . $post->id) : redirect("/posts/" . $post->id . "/deal");
+    }
+    
+    public function startDeal(Post $post, Request $request)
+    {
+        return view('posts.deal')->with([
+            'proposal' => Proposal::getProposal($request['post_id'], $request['user_id'])
+            ]);
+    }
+    
+    public function review(Request $request)
+    {
+        $input_review = request['review'];
+
+        // バリデーション
+        $request->validate([
+            'post_id' => [
+                'required',
+                'exists:posts,id',
+                function($attribute, $value, $fail) use($request) {
+
+                    // ログインしてるかチェック
+                    if(!auth()->check()) {
+
+                        $fail('レビューするにはログインしてください。');
+                        return;
+
+                    }
+
+                    // すでにレビュー投稿してるかチェック
+                    $exists = Review::where('sender_id', $request->user()->id)
+                        ->where('post_id', $input_review['post_id'])
+                        ->exists();
+
+                    if($exists) {
+
+                        $fail('すでにレビューは投稿済みです。');
+                        return;
+
+                    }
+
+                }
+            ],
+            'score' => 'required',
+        ]);
+        
+        $review = new Review();
+        $review->fill($input_review)->save();
+        return redirect('/');
     }
 }

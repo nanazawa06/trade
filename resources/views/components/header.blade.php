@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>GoodsTrade</title>
-        <!-- Fonts -->
         <link href="/css/app.css" rel="stylesheet">
+        <!-- Fonts -->
     </head>
     <header class="border-b border-slate-200">
       <div class="flex">
@@ -61,6 +61,6 @@
     </header>
     <body>
         {{ $slot }}
-        <script src="/js/app.js" defer></script>
+        
     </body>
 </html>
