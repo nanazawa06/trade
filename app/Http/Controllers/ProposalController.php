@@ -27,8 +27,9 @@ class ProposalController extends Controller
             'images.*' => 'required',
         ]);
         
+        $proposal->fill($input_request)->save();
+        
         $images = $request->file('images');
-        //dd($input_request);
         foreach ($images as $image) {
              $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
             // Imageモデルにデータを保存
@@ -37,7 +38,6 @@ class ProposalController extends Controller
                 ]);
             }
         
-        $proposal->fill($input_request)->save();
         return redirect('/');
     }
 }

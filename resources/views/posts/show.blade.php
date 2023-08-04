@@ -144,7 +144,7 @@
           </div>
         </div>
         <div class="request">
-            <form action="{{ route('store.request') }}" method="POST">
+            <form action="{{ route('store.request') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="want" class="text-sm font-medium text-gray-900 block mb-2">欲しいグッズ</label>
@@ -179,5 +179,5 @@
             </form>
         </div>
     </div>
-    <script src="/js.show.js"></script>
+    <script src="/js/show.js"></script>
 </x-header>

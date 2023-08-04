@@ -15,9 +15,9 @@
             <div class="flex flex-col h-full overflow-x-auto mb-4">
                 <div class="flex flex-col h-full">
                   <div class="grid grid-cols-12 gap-y-2">
-                    @if ($post->chats)
+                    @if ($proposal->chats)
                     
-                    @foreach ($post->chats as $chat)
+                    @foreach ($proposal->chats as $chat)
                     
                         @if (!Auth::check() || $chat->user_id != Auth::user()->id)
                             <div class="col-start-1 col-end-8 p-3 rounded-lg">
@@ -86,7 +86,6 @@
                   </button>
                 </div>
               </div>
-              <input type="hidden" name="chat[proposal_id]" value="{{ $proposal->id }}">
             </form>
         </div>
     </div>

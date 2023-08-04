@@ -9,16 +9,16 @@
                     <a href="/posts/{{ $proposal->id }}"><img src="{{ $proposal->images[0]->image_url  }}" alt="画像が読み込めません。"/></a>
                 </div>
                 <div class="m-4">
-                    <div class=""><a href="/uses/{{ $proposal->user_id }}">ユーザー：{{ $proposal->user->name }}</a></div>
-                    <p class="flex-auto text-lg m-2 font-semibold text-slate-900">求：{{ $post->want_item }}</p>
+                    <div class="flex-auto text-lg m-2 font-semibold text-slate-900"><a href="/users/{{ $proposal->user_id }}">リクエストユーザー：{{ $proposal->user->name }}</a></div>
+                    <p class="flex-auto text-lg m-2 font-semibold text-slate-900">求：{{ $proposal->want_item }}</p>
                     <p class="flex-auto text-lg m-2 font-semibold text-slate-900">譲：{{ $proposal->give_item }}</p>                        
-                    <form action="/posts/{{ $proposal->id }}/deal" method="POST">
+                    <form action="/posts/{{ $proposal->post->id }}/deal" method="POST">
                         @csrf
+                        <input type="hidden" name="user_id" value="{{ $proposal->user_id }}">
                         <button type="submit" class="focus:outline-none focus:ring-2 focus:ring-offset-2  focus:ring-gray-400 ml-3 bg-gray-100 transition duration-150 text-gray-600 ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm">承諾する</button>
                     </form>
                 </div>
             </div>
         @endforeach
     </div>
-    {{ $proposals->links() }}
 </x-header>

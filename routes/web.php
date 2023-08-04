@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,20 +26,22 @@ Route::controller(PostController::class)->group(function(){
     Route::get('/', 'index')->name('index');
     Route::post('/posts', 'store')->name('store');
     Route::get('/posts/create', 'create')->name('create');
+    Route::get('/posts/deals', 'indexDeals')->name('index.deals'); 
     Route::get('/posts/{post}', 'show')->name('show');
-    Route::put('/posts/{post}', 'message')->name('message');
+    Route::put('/posts/{post}', 'messageToPost')->name('message');
     Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
-    Route::get('/posts/{post}/deal', 'deal')->name('deal');
+    Route::get('/posts/{post}/deal', 'dealing')->name('dealing');
     Route::post('/posts/{post}/deal', 'startDeal')->name('start.deal');
-    Route::put('/posts/{post}/deal', 'message')->name('deal.message');
+    Route::put('/posts/{post}/deal', 'messageToDeal')->name('deal.message');
     Route::post('/users/reviews', 'review')->name('review');
    
 });
-
-Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
+Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->name('index.reviews');
 
 Route::get('/users/requests',  [ProposalController::class,'indexRequests'])->name('index.requests');
+Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
+
 Route::post('/users/requests',  [ProposalController::class,'storeRequest'])->name('store.request');
 
 

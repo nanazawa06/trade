@@ -18,14 +18,14 @@ class Proposal extends Model
         'post_id',
         'user_id',
         'want_item',
-        'give-item',
+        'give_item',
         ];
         
     public function getProposal($post_id, $user_id)
     {
-        $this::where('post_id', $post_id)->where('user_id', '!=', $user_id)->delete();
+        $this->where('post_id', $post_id)->where('user_id', '!=', $user_id)->delete();
         
-        return $this::where('post_id', $post_id)->first();
+        return $this->where('post_id', $post_id)->first();
     }
     
     public function getProposals($user_id, $limit_count=20)
