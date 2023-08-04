@@ -13,12 +13,20 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user_page', ['user' => Auth::user()->id])" :active="request()->routeIs('user_page')">
-                        {{ __('プロフィール') }}
+                        {{ __('ユーザーページ') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('user_page', ['user' => Auth::user()->id])" :active="request()->routeIs('user_page')">
-                        {{ __('') }}
+                    <x-nav-link :href="route('index.requests')" :active="request()->routeIs('index.requests')">
+                        {{ __('リクエスト一覧') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('index.deals')" :active="request()->routeIs('index.deals')">
+                        {{ __('取引一覧') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('index.reviews')" :active="request()->routeIs('index.reviews')">
+                        {{ __('レビュー一覧') }}
                     </x-nav-link>
                 </div>
             </div>

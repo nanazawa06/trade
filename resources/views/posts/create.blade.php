@@ -1,14 +1,14 @@
 <x-header>
+    <div class="top-preview w-200 relative"></div>
+    <div class="preview-box flex flex-wrap gap-1 m-2"></div> 
     <form class="py-6 px-9" action="/posts" method="POST" enctype="multipart/form-data">
       @csrf
-        <div class="top-preview w-200 relative"></div>
-        <div class="preview-box flex flex-wrap gap-1 m-2"></div> 
         <div class="mb-6 pt-4">
             <label class="mb-5 block text-xl font-semibold text-[#07074D]">
               Upload File
             </label>
-    
-            <div class=" mb-8">
+            <!-- 画像のアップロード -->
+            <div class="mb-8">
               　<input type="file" name="images[]" id="input" accept="image/*" multiple class="sr-only" />
               　<label
                 for="input" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
@@ -26,7 +26,7 @@
                       </span>
                 </div>
                 </label>
-                </div>
+            </div>
               <div class="flex-auto p-6">
                 
                   <div class="flex flex-wrap">
@@ -122,4 +122,5 @@
           <input type=submit value="出品する" class="bg-orange-500 border border-gray-300 text-white-900 sm:text-sm rounded-lg focus:ring-orange-600 focus:border-orange-600 block p-2.5">
       </div>
     </form>
+    <script src="/js/app.js"></script>
 </x-header>

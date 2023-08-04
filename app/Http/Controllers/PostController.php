@@ -9,6 +9,8 @@ use App\Models\State;
 use App\Models\Item;
 use Cloudinary;
 use App\Models\Chat;
+use App\Models\Review;
+use App\Models\Proposal;
 
 class PostController extends Controller
 {
@@ -32,8 +34,9 @@ class PostController extends Controller
 
     public function store(Post $post, Request $request)
     {
-        //user_idとdescriptionをpostsテーブルに保存
         $post = new Post();
+        
+        //user_idとdescriptionをpostsテーブルに保存
         $post->description = $request->input('description');
         $user = $request->user();
         $post->user_id = $user->id;
@@ -41,19 +44,16 @@ class PostController extends Controller
         $post->save();
         
         //画像をimagesテーブルに保存
-        
-            $images = $request->file('images');
-            //dd($images);
-            foreach ($images as $image) {
-                 $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
-                // Imageモデルにデータを保存
-                $post->images()->create([
-                    'image_url' => $image_url,
-                ]);
-                }
-        
+        $images = $request->file('images');
+        foreach ($images as $image) {
+             $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
+            // Imageモデルにデータを保存
+            $post->images()->create([
+                'image_url' => $image_url,
+            ]);
+            }
+                
         //欲しいグッズ一覧をitemsテーブルに保存
-        
         $wants = $request['wants'];
         foreach ($wants as $item_name)
         {
@@ -70,7 +70,7 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
-    public function message(Post $post, Chat $chat, Request $request)
+    public function messageToPost(Post $post, Chat $chat, Request $request)
     {
          //messageをchatsテーブルに保存
         $input_chat = $request['chat'];
@@ -78,12 +78,75 @@ class PostController extends Controller
                     'user_id' => $input_chat['user_id'],
                     'message' => $input_chat['message'],
                 ]);
-        /* 
-        $chat->message = $request('message');
-        $chat->user_id = $user->id;
-        $chat->post_id = $request('post_id');
-        $chat->save();
-        */
         return redirect("/posts/" . $post->id);
+    }
+    
+    public function messageToDeal(Post $post, Request $request)
+    {
+        //messageをchatsテーブルに保存
+        $input_chat = $request['chat'];
+        $post->proposals->first()->chats()->create([
+                    'user_id' => $input_chat['user_id'],
+                    'message' => $input_chat['message'],
+                ]);
+        return redirect("/posts/" . $post->id . "/deal");
+    }
+    
+    public function startDeal(Post $post, Request $request)
+    {
+        $proposal = new Proposal();
+        return view('posts.deal')->with([
+            'proposal' => $proposal->getProposal($post->id, $request->input('user_id'))
+            ]);
+    }
+    
+    public function dealing(Post $post)
+    {
+        $proposal = new Proposal();
+        return view('posts.deal')->with([
+            'proposal' => $proposal->where('post_id', $post->id)->first()
+            ]);
+    }
+    
+    public function review(Request $request)
+    {
+        $input_review = $request['review'];
+        
+        // バリデーション
+        /*$request->validate([
+            'post_id' => [
+                'required',
+                'exists:posts,id',
+                function($attribute, $value, $fail) use($request) {
+
+                    // ログインしてるかチェック
+                    if(!auth()->check()) {
+
+                        $fail('レビューするにはログインしてください。');
+                        return;
+
+                    }
+
+                    // すでにレビュー投稿してるかチェック
+                    $exists = Review::where('sender_id', $request->user()->id)
+                        ->where('post_id', $input_review['post_id'])
+                        ->exists();
+
+                    if($exists) {
+
+                        $fail('すでにレビューは投稿済みです。');
+                        return;
+
+                    }
+
+                }
+            ],
+            'score' => 'required',
+        ]);
+        */
+        $review = new Review();
+        $review->fill($input_review)->save();
+        dd($review);
+        return redirect('/');
     }
 }

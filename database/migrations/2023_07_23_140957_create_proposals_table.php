@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('give_item');
             $table->string('want_item');
-            $table->timestamp('created_at');
+            $table->timestamps();
             $table->softDeletes();
         });
     }

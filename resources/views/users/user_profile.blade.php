@@ -24,6 +24,10 @@
             </div>
         </div>
         
+        @if (Auth::check() && Auth::id() == $user->id)
+            @include('layouts.navigation')
+        @endif
+        
         <div class="px-9 mt-5 mb-5 border-gray-900 ">
             {{ $user->profile }}
         </div>
