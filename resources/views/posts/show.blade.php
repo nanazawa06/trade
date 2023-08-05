@@ -1,15 +1,15 @@
 <x-header>
     <div>
         <div class="flex font-sans gap-x-3">
-            <div class="preview-box flex-row relative gap-y-1">
+            <div class="preview-box flex flex-row relative gap-y-1">
                 @foreach ( $post->images as $image )
                     <div class="flex-none w-40 relative">
-                        <img src="{{ $image->image_url }}" alt="サムネイル" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                        <img src="{{ $post->id/*$image->image_url*/ }}" alt="サムネイル" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                     </div>
                 @endforeach
             </div>
             <div class="top-preview flex-none w-48 relative">
-                <img src="{{ $post->images[0]->image_url }}" alt="" id="mainImage" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+                <img src="{{ $post->id/*$post->images[0]->image_url*/ }}" alt="" id="mainImage" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
             </div>
             <div class="flex-auto p-6">
                 <div class="flex flex-wrap">
@@ -170,6 +170,25 @@
                             <input type="file" name="images[]" id="input" accept="image/*" multiple class="sr-only" />
                         </label>
                     </div>
+                </div>
+                <div class="mb-6">
+                     <textarea
+                        name="offer[message]"
+                        rows="6"
+                        placeholder="メッセージ"
+                        class="
+                        w-full
+                        rounded
+                        py-3
+                        px-[14px]
+                        text-body-color text-base
+                        border border-[f0f0f0]
+                        resize-none
+                        outline-none
+                        focus-visible:shadow-none
+                        focus:border-primary
+                        "
+                        ></textarea>
                 </div>
                 <input type="hidden" name="offer[user_id]" value="{{ Auth::check() ? Auth::user()->id : 'guest' }}">
                 <input type="hidden" name="offer[post_id]" value="{{ $post->id }}">
