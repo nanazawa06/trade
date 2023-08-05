@@ -19,6 +19,8 @@ class Proposal extends Model
         'user_id',
         'want_item',
         'give_item',
+        'status',
+        'message',
         ];
         
     public function getProposal($post_id, $user_id)

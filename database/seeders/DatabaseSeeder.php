@@ -23,6 +23,11 @@ class DatabaseSeeder extends Seeder
          $this->call([
             StateTableSeeder::class,
             AreaTableSeeder::class,
+            UsersTableSeeder::class,
+            PostsTableSeeder::class,
+            ItemsTableSeeder::class,
+            WantsTableSeeder::class,
+            GivesTableSeeder::class,
         ]);
     }
 }

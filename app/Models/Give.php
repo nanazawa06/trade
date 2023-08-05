@@ -10,6 +10,7 @@ use App\Models\Post;
 class Give extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     
     public function posts()
     {

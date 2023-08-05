@@ -9,6 +9,9 @@ class UserController extends Controller
 {
     public function showUser(User $user)
     {
-        return view('users.user_profile')->with(['user' => $user]);
+        return view('users.user_profile')->with([
+            'user' => $user,
+            'review_score' => $user->averageScore(),
+            ]);
     }
 }

@@ -31,6 +31,19 @@ class User extends Authenticatable
         'profile_icon'
     ];
 
+    public function averageScore()
+    {
+        $sum = 0;
+        $reviews = $this->receive_reviews;
+        $count = $reviews->count();
+        
+        foreach ($reviews as $review) {
+            $sum += $review->score;
+        }
+        
+         return $count > 0 ? $sum / $count : 0;
+    }
+    
     /**
      * The attributes that should be hidden for serialization.
      *

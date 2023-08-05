@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('give_item');
             $table->string('want_item');
+            $table->string('message')->nullable();
+            $table->enum('status', ['requesting', 'dealing', 'finished'])->default('requesting');
             $table->timestamps();
             $table->softDeletes();
         });

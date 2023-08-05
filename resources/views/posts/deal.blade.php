@@ -23,8 +23,11 @@
                             <div class="col-start-1 col-end-8 p-3 rounded-lg">
                               <div class="flex flex-row items-center">
                                 <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                  A
-                                </div>
+                                  <a href="/users/{{ $chat->user_id }}">
+                                  <img
+                                   src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
+                                   class="w-16 h-16 rounded-full object-cover border-none bg-gray-200">
+                                   </a>                              </div>
                                 <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
                                   <div>{{ $chat->message }}</div>
                                 </div>
@@ -34,7 +37,11 @@
                             <div class="col-start-6 col-end-13 p-3 rounded-lg">
                               <div class="flex items-center justify-start flex-row-reverse">
                                 <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                  B
+                                  <a href="/users/{{ $chat->user_id }}">
+                                   <img
+                                   src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
+                                   class="w-16 h-16 rounded-full object-cover border-none bg-gray-200">
+                                   </a>
                                 </div>
                                 <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
                                   <div>{{ $chat->message }}</div>
@@ -47,7 +54,7 @@
                   </div>
                 </div>
             </div>
-            <form action="/posts/{{ $proposal->post->id }}/deal" method="POST">
+            <form action="/posts/{{ $proposal->id }}/deal" method="POST">
                 @csrf
                 @method('PUT')
               <div class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4">
@@ -122,7 +129,7 @@
             </fieldset>
         </div>
         
-        <div>
+        <div class="m-5 p-3">
             <x-input-label for="review[comment]" :value="__('コメント')" />
             <textarea
               rows="4"

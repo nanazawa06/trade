@@ -26,23 +26,28 @@ Route::controller(PostController::class)->group(function(){
     Route::get('/', 'index')->name('index');
     Route::post('/posts', 'store')->name('store');
     Route::get('/posts/create', 'create')->name('create');
-    Route::get('/posts/deals', 'indexDeals')->name('index.deals'); 
     Route::get('/posts/{post}', 'show')->name('show');
     Route::put('/posts/{post}', 'messageToPost')->name('message');
     Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
-    Route::get('/posts/{post}/deal', 'dealing')->name('dealing');
-    Route::post('/posts/{post}/deal', 'startDeal')->name('start.deal');
-    Route::put('/posts/{post}/deal', 'messageToDeal')->name('deal.message');
     Route::post('/users/reviews', 'review')->name('review');
    
 });
 Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->name('index.reviews');
 
-Route::get('/users/requests',  [ProposalController::class,'indexRequests'])->name('index.requests');
+Route::controller(ProposalController::class)->group(function(){
+    Route::get('/users/requests',  'indexRequests')->name('index.requests');
+    Route::get('/posts/requests/{proposal}', 'showRequest')->name('show.request');
+    Route::get('/users/deals', 'indexDealing')->name('index.deals'); 
+    Route::get('/posts/{proposal}/deal', 'showDealing')->name('dealing');
+    Route::post('/posts/{proposal}/deal', 'startDeal')->name('start.deal');
+    Route::put('/posts/{proposal}/deal', 'messageToDeal')->name('deal.message');
+    Route::post('/users/requests', 'storeRequest')->name('store.request');
+});
+    
 Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
 
-Route::post('/users/requests',  [ProposalController::class,'storeRequest'])->name('store.request');
+
 
 
 Route::get('/dashboard', function () {

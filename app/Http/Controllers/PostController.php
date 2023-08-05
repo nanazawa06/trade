@@ -32,7 +32,7 @@ class PostController extends Controller
         return view('posts.create')->with(['states' => $state->get()]);
     }
 
-    public function store(Post $post, Request $request)
+    public function store(Request $request)
     {
         $post = new Post();
         
@@ -44,14 +44,16 @@ class PostController extends Controller
         $post->save();
         
         //画像をimagesテーブルに保存
-        $images = $request->file('images');
-        foreach ($images as $image) {
-             $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
-            // Imageモデルにデータを保存
-            $post->images()->create([
-                'image_url' => $image_url,
-            ]);
-            }
+        if ($request->hasFile('images')){
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                 $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
+                // Imageモデルにデータを保存
+                $post->images()->create([
+                    'image_url' => $image_url,
+                ]);
+                }
+        }
                 
         //欲しいグッズ一覧をitemsテーブルに保存
         $wants = $request['wants'];
@@ -81,43 +83,17 @@ class PostController extends Controller
         return redirect("/posts/" . $post->id);
     }
     
-    public function messageToDeal(Post $post, Request $request)
-    {
-        //messageをchatsテーブルに保存
-        $input_chat = $request['chat'];
-        $post->proposals->first()->chats()->create([
-                    'user_id' => $input_chat['user_id'],
-                    'message' => $input_chat['message'],
-                ]);
-        return redirect("/posts/" . $post->id . "/deal");
-    }
-    
-    public function startDeal(Post $post, Request $request)
-    {
-        $proposal = new Proposal();
-        return view('posts.deal')->with([
-            'proposal' => $proposal->getProposal($post->id, $request->input('user_id'))
-            ]);
-    }
-    
-    public function dealing(Post $post)
-    {
-        $proposal = new Proposal();
-        return view('posts.deal')->with([
-            'proposal' => $proposal->where('post_id', $post->id)->first()
-            ]);
-    }
-    
     public function review(Request $request)
     {
         $input_review = $request['review'];
         
         // バリデーション
         /*$request->validate([
+            'score' => 'required',
             'post_id' => [
                 'required',
                 'exists:posts,id',
-                function($attribute, $value, $fail) use($request) {
+                function($attribute, $value, $fail) use($request, $input_review) {
 
                     // ログインしてるかチェック
                     if(!auth()->check()) {
@@ -141,12 +117,15 @@ class PostController extends Controller
 
                 }
             ],
-            'score' => 'required',
+            
         ]);
         */
+        
         $review = new Review();
         $review->fill($input_review)->save();
-        dd($review);
+        $proposal = Proposal::where('post_id', $input_review['post_id'])->first();
+        $proposal->status = 'finished';
+        $proposal->save();
         return redirect('/');
     }
 }
