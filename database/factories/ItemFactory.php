@@ -14,10 +14,11 @@ class ItemFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Item::class;
     public function definition()
     {
         return [
-            'name' => fake()->word,
+            'name' => $this->fake()->word
         ];
     }
 }
