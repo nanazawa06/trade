@@ -20,7 +20,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'description' => $this->fake()->paragraph,
+            'description' => fake()->paragraph,
             'user_id' => rand(1, 2),
             'state_id' => rand(1, 5),
         ];

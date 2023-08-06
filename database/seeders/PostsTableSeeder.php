@@ -17,8 +17,10 @@ class PostsTableSeeder extends Seeder
     public function run()
     {
         //Post::factory()->count(4)->create();
+        for ($i=1; $i < 10; $i++){
         $post = \App\Models\Post::factory()
             ->withItems()
             ->create();
+        }
     }
 }
