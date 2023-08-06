@@ -14,11 +14,15 @@ use App\Models\Proposal;
 
 class PostController extends Controller
 {
-    public function index(Post $post, Area $area)
+    public function index(Post $post, Request $request)
     {
+        $wants = $request->input('want');
+        $gives = $request->input('give');
+        $area = $request->input('area');
+        $area = Area::all();
         return view('posts.index')->with([
-           'posts' => $post->get(),
-           'areas' => $area->get(),
+           'posts' => $post->getlatest($want=$wants, $give=$gives,$area=$area),
+           'areas' => $area,
            ]);
     }
     

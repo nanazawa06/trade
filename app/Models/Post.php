@@ -23,6 +23,52 @@ class Post extends Model
         'state_id',
         ];
         
+    public function getLatest($wants=null, $gives=null, $area=null, $limit_count = 20)
+    {
+        $posts = Post::with('images')->orderBy('created_at', 'DESC')->paginate($limit_count);
+        
+        $query = Post::query();
+
+        if ($area) {
+            $query->where('area_id', $area);
+        }
+       // もしwant検索フォームにキーワードが入力されたら
+        if ($wants) {
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($wants, 's');
+
+            // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
+            foreach($wordArraySearched as $value) {
+                $query->where('description', 'like', '%'.$value.'%')
+                ->orWhereHas('wants', function ($query) use ($value) {
+                       $query->where('name', 'like', '%'.$value.'%');
+                   });
+            }
+        }
+        
+        if ($gives) {
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($gives, 's');
+
+            // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
+            foreach($wordArraySearched as $value) {
+                $query->where('description', 'like', '%'.$value.'%')
+                ->orWhereHas('gives', function ($query) use ($value) {
+                       $query->where('name', 'like', '%'.$value.'%');
+                   });
+            }
+        }
+        
+        return $posts = $query->get();//paginate($limit_count);
+        
+    }
+        
     public function user()
     {
         return $this->belongsTo(User::class);
