@@ -2,18 +2,18 @@
 <x-header>
     <div class="p-10">
         <div class="serch">
-            <form>
+            <form action="{{ route('index') }}" method=GET>
                 @csrf
                 <div>
                     <label for="want" class="text-sm font-medium text-gray-900 block mb-2">欲しいグッズ</label>
-                    <input type="search" id="want"name="want" value="{{request('search')}}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" placeholder="欲しいものを入力してください" aria-lavel="検索">
+                    <input type="search" id="want"name="want" value="{{request('want')}}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" placeholder="欲しいものを入力してください" aria-lavel="検索">
                 </div>
                 <div>
                     <label for="give" class="text-sm font-medium text-gray-900 block mb-2">譲るグッズ</label>
-                    <input type="search" id="give" name="give" value="{{request('search')}}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" placeholder="譲るものを入力してください" aria-lavel="検索">
+                    <input type="search" id="give" name="give" value="{{request('give')}}" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" placeholder="譲るものを入力してください" aria-lavel="検索">
                 </div>
                 <div>
-                    <select name="prefecture" class="p-3 rounded border border-gray-300">
+                    <select name="area" class="p-3 rounded border border-gray-300">
                         <option value="">所在地から検索</option>
                         @foreach ($areas as $prefecture)
                             <option class="" value="{{ $prefecture->id }}">{{ $prefecture->name }}</option>
@@ -36,5 +36,8 @@
                 </div>
             </div>
         @endforeach
+        </div>
+        <div class='paginate'>
+            {{ $posts->links() }}
         </div>
 </x-header>
