@@ -25,9 +25,9 @@ class DatabaseSeeder extends Seeder
             AreaTableSeeder::class,
             UsersTableSeeder::class,
             PostsTableSeeder::class,
-            ItemsTableSeeder::class,
-            WantsTableSeeder::class,
-            GivesTableSeeder::class,
+            //ItemsTableSeeder::class,
+            //WantsTableSeeder::class,
+            //GivesTableSeeder::class,
         ]);
     }
 }

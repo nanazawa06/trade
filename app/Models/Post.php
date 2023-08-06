@@ -51,4 +51,6 @@ class Post extends Model
     {
         return $this->belongsToMany(Item::class, 'gives');
     }
+    
+    
 }
