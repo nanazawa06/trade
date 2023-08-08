@@ -1,6 +1,5 @@
 <x-header>
-    <div class="top-preview w-200 relative"></div>
-    <div class="preview-box flex flex-wrap gap-1 m-2"></div> 
+    <div class="top-preview w-200 h-200 relative mx-5 mt-5"></div>
     <form class="py-6 px-9" action="/posts" method="POST" enctype="multipart/form-data">
       @csrf
         <div class="mb-6 pt-4">
@@ -8,25 +7,68 @@
               Upload File
             </label>
             <!-- 画像のアップロード -->
-            <div class="mb-8">
-              　<input type="file" name="images[]" id="input" accept="image/*" multiple class="sr-only" />
-              　<label
-                for="input" class="relative flex min-h-[200px] items-center justify-center rounded-md border border-dashed border-[#e0e0e0] p-12 text-center">
-                <div>
-                      <span class="mb-2 block text-xl font-semibold text-[#07074D]">
-                        Drop files here
-                      </span>
-                      <span class="mb-2 block text-base font-medium text-[#6B7280]">
-                        Or
-                      </span>
-                      <span
-                        class="inline-flex rounded border border-[#e0e0e0] py-2 px-7 text-base font-medium text-[#07074D]"
-                      >
-                        Browse
-                      </span>
+            <div class="grid grid-cols-4 grid-auto-rows: minmax(0, 1fr)">
+              <div id="preview0" class="h-50 w-50 hidden"></div>
+              <div class="upload-box0 relative grid grid-cols-1 mt-5 mx-2 aspect-square">
+                <div class='flex items-center justify-center w-full absolute top-0 left-0'>
+                    <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>
+                        <div class='flex flex-col items-center justify-center pt-7'>
+                            <svg class="w-10 h-10 text-purple-400 group-hover:text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class='lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider'>Select a photo</p>
+                        </div>
+                        <input type="file" name="images[0]" id="input" accept="image/*" class="file sr-only" />
+                    </label>
                 </div>
-                </label>
+              </div>
+  
+              <div id="preview1" class="hidden"></div>
+              <div class="upload-box1 relative grid grid-cols-1 mt-5 mx-2 aspect-square">
+                <div class='flex items-center justify-center w-full absolute top-0 left-0'>
+                    <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>
+                        <div class='flex flex-col items-center justify-center pt-7'>
+                            <svg class="w-10 h-10 text-purple-400 group-hover:text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class='lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider'>Select a photo</p>
+                        </div>
+                        <input type="file" name="images[1]" id="" accept="image/*" class="file sr-only" />
+                    </label>
+                </div>
+              </div>
+  
+              <div id="preview2" class="hidden"></div>
+              <div class="upload-box2 relative grid grid-cols-1 mt-5 mx-2 aspect-square">
+                <div class='flex items-center justify-center w-full absolute top-0 left-0'>
+                    <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>
+                        <div class='flex flex-col items-center justify-center pt-7'>
+                            <svg class="w-10 h-10 text-purple-400 group-hover:text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class='lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider'>Select a photo</p>
+                        </div>
+                        <input type="file" name="images[2]" id="" accept="image/*" class="file sr-only"/>
+                    </label>
+                </div>
+              </div>
+  
+              <div id="preview3" class="hidden"></div>
+              <div class="upload-box3 relative grid grid-cols-1 mt-5 mx-2 aspect-square">
+                <div class='flex items-center justify-center w-full absolute top-0 left-0'>
+                    <label class='flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-purple-300 group'>
+                        <div class='flex flex-col items-center justify-center pt-7'>
+                            <svg class="w-10 h-10 text-purple-400 group-hover:text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            <p class='lowercase text-sm text-gray-400 group-hover:text-purple-600 pt-1 tracking-wider'>Select a photo</p>
+                        </div>
+                        <input type="file" name="images[3]" id="" accept="image/*" class="file sr-only"/>
+                    </label>
+                </div>
+              </div>
             </div>
+          
               <div class="flex-auto p-6">
                 
                   <div class="flex flex-wrap">

@@ -1,4 +1,5 @@
 <x-header>
+    @include('layouts.navigation')
     <head class="w-full h-8 bg-gray-300">
         <h1 class="text-xl font-bold text-justify">取引中</h1>
     </head>
@@ -16,4 +17,5 @@
             </div>
         @endforeach
     </div>
+    <script src="/js/app.js"></script>
 </x-header>

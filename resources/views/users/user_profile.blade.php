@@ -49,4 +49,5 @@
            </div>
        @endforeach
     </div>
+    <script src="/js/app.js"></script>
 </x-header>
