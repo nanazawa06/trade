@@ -65,7 +65,7 @@ class Post extends Model
             }
         }
         
-        return $posts = $query->get();//paginate($limit_count);
+        return $posts = $query->paginate($limit_count);
         
     }
         

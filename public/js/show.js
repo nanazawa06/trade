@@ -3152,128 +3152,6 @@ var module_default = src_default;
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-
-
-window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
-alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
-document.addEventListener('DOMContentLoaded', function () {
-  var topPreview = document.querySelector(".top-preview");
-  var fileInputs = document.querySelectorAll(".file");
-
-  //アップロードされた画像を表示する
-  function loadImg(e, uploadBox, preview, input) {
-    try {
-      var file = e.target.files[0];
-    } catch (error) {
-      var file = e.dataTransfer.files[0];
-    }
-    if (!file) return; // 何も選択されなければreturn
-    uploadBox.classList.add("hidden");
-    preview.classList.remove("hidden");
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var fileURL = e.target.result; //ファイルのurlを取得
-      var imgContainer = document.createElement('div');
-      var smallImg = document.createElement('img');
-      var btn = document.createElement('button');
-      var bigImg = document.querySelector('.big-image');
-      //アップロードした画像を一覧とは別で大きく表示する
-      //bigImgが取得できなければ作成する
-      if (!bigImg) {
-        var bigImg = document.createElement('img');
-        var bigImgContainer = document.createElement('div');
-        topPreview.appendChild(bigImgContainer);
-        bigImgContainer.classList.add("object-cover");
-        bigImgContainer.appendChild(bigImg);
-        bigImg.classList.add('big-image', "object-cover");
-      }
-      bigImg.src = fileURL;
-
-      //画像をpreviewに小さく表示
-      imgContainer.appendChild(smallImg);
-      imgContainer.appendChild(btn);
-      preview.appendChild(imgContainer);
-      imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "mt-5", "overflow-hidden", "bg-black", "rounded-5");
-      smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full", "w-full");
-      smallImg.src = fileURL;
-
-      //画像とセットで削除ボタンを表示する
-      btn.classList.add("delete", "relative");
-      btn.setAttribute('data-image', fileURL);
-      btn.textContent = '削除';
-
-      //小さい画像がクリックされると大きい画像を変更する
-      smallImg.onclick = function () {
-        bigImg.src = fileURL;
-      };
-
-      // 削除ボタンが押されると画像を削除する
-      btn.addEventListener('click', function (event) {
-        event.preventDefault();
-        var image = this.getAttribute('data-image');
-        deleteImage(image, uploadBox, preview);
-        input.value = '';
-      });
-      console.log('loading');
-    };
-    reader.readAsDataURL(file);
-  }
-  ;
-
-  //ボタンのdata-imageと同じsrcをもつ画像を親要素のdivと一緒に削除
-  function deleteImage(image, uploadBox, preview) {
-    var imageList = document.querySelectorAll("img[src=\"".concat(image, "\"]"));
-    console.log(imageList);
-    imageList.forEach(function (element) {
-      element.parentNode.remove();
-    });
-    uploadBox.classList.remove("hidden");
-    preview.classList.add("hidden");
-  }
-  var num = 0;
-  fileInputs.forEach(function (input) {
-    var uploadBox = document.querySelector(".upload-box" + num);
-    var preview = document.getElementById('preview' + num);
-    input.addEventListener("change", function (event) {
-      loadImg(event, uploadBox, preview, input);
-    }, false);
-    // ファイルがドロップされた時の処理
-    uploadBox.addEventListener("drop", function (event) {
-      event.preventDefault();
-      loadImg(event, uploadBox, preview, input);
-    }, false);
-    // ドラッグした時の処理
-    uploadBox.addEventListener("dragover", dragover, false);
-    // ドラッグがエリアから離れた時の処理
-    uploadBox.addEventListener("dragleave", dragleave, false);
-    num++;
-  });
-  function dragover(e) {
-    // ドラッグした時に背景色を変える
-    e.stopPropagation();
-    e.preventDefault();
-    this.style.background = "#e1e7f0";
-  }
-  function dragleave(e) {
-    // ドラッグがエリアから離れたら背景色を元に戻す
-    e.stopPropagation();
-    e.preventDefault();
-    this.style.background = "#fff";
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -22605,19 +22483,6 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
 /***/ }),
 
-/***/ "./resources/css/app.css":
-/*!*******************************!*\
-  !*** ./resources/css/app.css ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./node_modules/axios/lib/adapters/adapters.js":
 /*!*****************************************************!*\
   !*** ./node_modules/axios/lib/adapters/adapters.js ***!
@@ -26725,42 +26590,7 @@ const isThenable = (thing) =>
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/chunk loaded */
-/******/ 	(() => {
-/******/ 		var deferred = [];
-/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
-/******/ 			if(chunkIds) {
-/******/ 				priority = priority || 0;
-/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
-/******/ 				deferred[i] = [chunkIds, fn, priority];
-/******/ 				return;
-/******/ 			}
-/******/ 			var notFulfilled = Infinity;
-/******/ 			for (var i = 0; i < deferred.length; i++) {
-/******/ 				var [chunkIds, fn, priority] = deferred[i];
-/******/ 				var fulfilled = true;
-/******/ 				for (var j = 0; j < chunkIds.length; j++) {
-/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
-/******/ 						chunkIds.splice(j--, 1);
-/******/ 					} else {
-/******/ 						fulfilled = false;
-/******/ 						if(priority < notFulfilled) notFulfilled = priority;
-/******/ 					}
-/******/ 				}
-/******/ 				if(fulfilled) {
-/******/ 					deferred.splice(i--, 1)
-/******/ 					var r = fn();
-/******/ 					if (r !== undefined) result = r;
-/******/ 				}
-/******/ 			}
-/******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -26822,68 +26652,119 @@ const isThenable = (thing) =>
 /******/ 		};
 /******/ 	})();
 /******/ 	
-/******/ 	/* webpack/runtime/jsonp chunk loading */
-/******/ 	(() => {
-/******/ 		// no baseURI
-/******/ 		
-/******/ 		// object to store loaded and loading chunks
-/******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
-/******/ 		var installedChunks = {
-/******/ 			"/js/app": 0,
-/******/ 			"css/app": 0
-/******/ 		};
-/******/ 		
-/******/ 		// no chunk on demand loading
-/******/ 		
-/******/ 		// no prefetching
-/******/ 		
-/******/ 		// no preloaded
-/******/ 		
-/******/ 		// no HMR
-/******/ 		
-/******/ 		// no HMR manifest
-/******/ 		
-/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
-/******/ 		// install a JSONP callback for chunk loading
-/******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
-/******/ 			var [chunkIds, moreModules, runtime] = data;
-/******/ 			// add "moreModules" to the modules object,
-/******/ 			// then flag all "chunkIds" as loaded and fire callback
-/******/ 			var moduleId, chunkId, i = 0;
-/******/ 			if(chunkIds.some((id) => (installedChunks[id] !== 0))) {
-/******/ 				for(moduleId in moreModules) {
-/******/ 					if(__webpack_require__.o(moreModules, moduleId)) {
-/******/ 						__webpack_require__.m[moduleId] = moreModules[moduleId];
-/******/ 					}
-/******/ 				}
-/******/ 				if(runtime) var result = runtime(__webpack_require__);
-/******/ 			}
-/******/ 			if(parentChunkLoadingFunction) parentChunkLoadingFunction(data);
-/******/ 			for(;i < chunkIds.length; i++) {
-/******/ 				chunkId = chunkIds[i];
-/******/ 				if(__webpack_require__.o(installedChunks, chunkId) && installedChunks[chunkId]) {
-/******/ 					installedChunks[chunkId][0]();
-/******/ 				}
-/******/ 				installedChunks[chunkId] = 0;
-/******/ 			}
-/******/ 			return __webpack_require__.O(result);
-/******/ 		}
-/******/ 		
-/******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
-/******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
-/******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
-/******/ 	})();
-/******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
-/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!******************************!*\
+  !*** ./resources/js/show.js ***!
+  \******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
+
+
+window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
+alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
+var mainImage = document.querySelector(".main-image");
+var fileInputs = document.querySelectorAll(".file");
+var subImages = document.querySelectorAll(".sub-image");
+console.log(fileInputs);
+//小さい画像がクリックされると大きい画像をクリックされた画像に変更する
+subImages.forEach(function (image) {
+  console.log(image);
+  image.onclick = function (event) {
+    event.preventDefault();
+    console.log(event);
+    mainImage.src = event.target.getAttribute('src');
+    console.log(event.target.getAttribute('src'));
+  };
+});
+
+//アップロードされた画像を表示する
+function loadImg(e, uploadBox, preview, input) {
+  try {
+    var file = e.target.files[0];
+  } catch (error) {
+    var file = e.dataTransfer.files[0];
+  }
+  if (!file) return; // 何も選択されなければreturn
+  uploadBox.classList.add("hidden");
+  preview.classList.remove("hidden");
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var fileURL = e.target.result; //ファイルのurlを取得
+    var imgContainer = document.createElement('div');
+    var smallImg = document.createElement('img');
+    var btn = document.createElement('button');
+
+    //画像をpreviewに小さく表示
+    imgContainer.appendChild(smallImg);
+    imgContainer.appendChild(btn);
+    preview.appendChild(imgContainer);
+    imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "mt-5", "overflow-hidden", "bg-gray-50", "rounded-5");
+    smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full", "w-full");
+    smallImg.src = fileURL;
+
+    //画像とセットで削除ボタンを表示する
+    btn.classList.add("delete", "relative");
+    btn.setAttribute('data-image', fileURL);
+    btn.textContent = '削除';
+
+    // 削除ボタンが押されると画像を削除する
+    btn.addEventListener('click', function (event) {
+      event.preventDefault();
+      var image = this.getAttribute('data-image');
+      deleteImage(image, uploadBox, preview);
+      input.value = '';
+    });
+    console.log('show.loadImg');
+  };
+  reader.readAsDataURL(file);
+}
+
+//ボタンのdata-imageと同じsrcをもつ画像を親要素のdivと一緒に削除
+function deleteImage(image, uploadBox, preview) {
+  var imageList = document.querySelectorAll("img[src=\"".concat(image, "\"]"));
+  console.log(imageList);
+  imageList.forEach(function (element) {
+    element.parentNode.remove();
+  });
+  uploadBox.classList.remove("hidden");
+  preview.classList.add("hidden");
+}
+var num = 0;
+fileInputs.forEach(function (input) {
+  var uploadBox = document.querySelector(".upload-box" + num);
+  var preview = document.getElementById('preview' + num);
+  input.addEventListener("change", function (event) {
+    loadImg(event, uploadBox, preview, input);
+  }, false);
+  // ファイルがドロップされた時の処理
+  uploadBox.addEventListener("drop", function (event) {
+    event.preventDefault();
+    loadImg(event, uploadBox, preview, input);
+  }, false);
+  // ドラッグした時の処理
+  uploadBox.addEventListener("dragover", dragover, false);
+  // ドラッグがエリアから離れた時の処理
+  uploadBox.addEventListener("dragleave", dragleave, false);
+  num++;
+});
+function dragover(e) {
+  // ドラッグした時に背景色を変える
+  e.stopPropagation();
+  e.preventDefault();
+  this.style.background = "#e1e7f0";
+}
+function dragleave(e) {
+  // ドラッグがエリアから離れたら背景色を元に戻す
+  e.stopPropagation();
+  e.preventDefault();
+  this.style.background = "#fff";
+}
+})();
+
 /******/ })()
 ;

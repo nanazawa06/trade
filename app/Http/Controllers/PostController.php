@@ -18,11 +18,12 @@ class PostController extends Controller
     {
         $wants = $request->input('want');
         $gives = $request->input('give');
-        $area = $request->input('area');
-        $area = Area::all();
+        $area_id = $request->input('area');
+        $areas = Area::all();
+        //dd($areas);
         return view('posts.index')->with([
-           'posts' => $post->getlatest($want=$wants, $give=$gives,$area=$area),
-           'areas' => $area,
+           'posts' => $post->getlatest($want=$wants, $give=$gives,$area=$area_id),
+           'areas' => $areas,
            ]);
     }
     
