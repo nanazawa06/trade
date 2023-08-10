@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\GoogleLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,5 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// googleへのリダイレクト
+Route::get('/auth/google', 'App\Http\Controllers\GoogleLoginController@redirectToGoogle');
+// 認証後の処理
+Route::get('/auth/google/callback', 'App\Http\Controllers\GoogleLoginController@handleGoogleCallback');
 
 require __DIR__.'/auth.php';
