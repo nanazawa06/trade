@@ -26703,12 +26703,12 @@ function loadImg(e, uploadBox, preview, input) {
     imgContainer.appendChild(smallImg);
     imgContainer.appendChild(btn);
     preview.appendChild(imgContainer);
-    imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "mt-5", "overflow-hidden", "bg-gray-50", "rounded-5");
-    smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full", "w-full");
+    imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "overflow-hidden", "rounded-5");
+    smallImg.classList.add("small-image", "absolute", "w-full", "w-full", "z-0", "bg-slate-100");
     smallImg.src = fileURL;
 
     //画像とセットで削除ボタンを表示する
-    btn.classList.add("delete", "relative");
+    btn.classList.add("delete", "p-1", "rounded", "absolute", "top-0", "right-0", "bg-glay-400", "text-white", "z-10");
     btn.setAttribute('data-image', fileURL);
     btn.textContent = '削除';
 

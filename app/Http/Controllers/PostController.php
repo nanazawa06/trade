@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\ReviewRequest;
 use App\Models\Post;
 use App\Models\Area;
 use App\Models\State;
@@ -14,13 +16,13 @@ use App\Models\Proposal;
 
 class PostController extends Controller
 {
-    public function index(Post $post, Request $request)
+    public function index(Request $request)
     {
         $wants = $request->input('want');
         $gives = $request->input('give');
         $area_id = $request->input('area');
         $areas = Area::all();
-        //dd($areas);
+        $post = new Post();
         return view('posts.index')->with([
            'posts' => $post->getlatest($want=$wants, $give=$gives,$area=$area_id),
            'areas' => $areas,
@@ -32,12 +34,13 @@ class PostController extends Controller
         return view('posts.show')->with(['post' => $post]);
     }
 
-    public function create(State $state)
+    public function create()
     {
-        return view('posts.create')->with(['states' => $state->get()]);
+        $state = State::all();
+        return view('posts.create')->with(['states' => $state]);
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         $post = new Post();
         
@@ -77,55 +80,93 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
-    public function messageToPost(Post $post, Chat $chat, Request $request)
+    public function edit(Post $post)
     {
-         //messageをchatsテーブルに保存
-        $input_chat = $request['chat'];
-        $post->chats()->create([
-                    'user_id' => $input_chat['user_id'],
-                    'message' => $input_chat['message'],
-                ]);
-        return redirect("/posts/" . $post->id);
+        $states = State::all();
+        return view('posts.edit')->with([
+            'post' => $post,
+            'states' => $states
+            ]);
     }
     
-    public function review(Request $request)
+    public function update(Request $request, Post $post)
     {
-        $input_review = $request['review'];
-        
-        // バリデーション
-        /*$request->validate([
-            'score' => 'required',
-            'post_id' => [
-                'required',
-                'exists:posts,id',
-                function($attribute, $value, $fail) use($request, $input_review) {
-
-                    // ログインしてるかチェック
-                    if(!auth()->check()) {
-
-                        $fail('レビューするにはログインしてください。');
-                        return;
-
-                    }
-
-                    // すでにレビュー投稿してるかチェック
-                    $exists = Review::where('sender_id', $request->user()->id)
-                        ->where('post_id', $input_review['post_id'])
-                        ->exists();
-
-                    if($exists) {
-
-                        $fail('すでにレビューは投稿済みです。');
-                        return;
-
-                    }
-
-                }
-            ],
+        //出品の編集を反映
+        if ($request->input('state_id')){
+            $request->validate([
+                'description' => 'max:500',
+                'state_id' => 'required',
+                'images.*' => 'mimes:jpg,png,gif|required|min:1',
+                'gives.*' => 'required|max:30',
+                'wants.*' => 'required|max:30',
+                ]);
+            //user_idとdescriptionをpostsテーブルに保存
+            $post->description = $request->input('description');
+            $user = $request->user();
+            $post->user_id = $user->id;
+            $post->state_id = $request->input('state_id');
+            $post->save();
             
-        ]);
-        */
+            //画像をimagesテーブルに保存
+            if ($request->hasFile('images')){
+                $images = $request->file('images');
+                $num = 0;
+                foreach ($images as $image) {
+                     $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
+                    // Imageモデルにデータを保存
+                    $image = $post->images[$num];
+                    $image->image_url = $image_url;
+                    $image->save();
+                    $num++;
+                    }
+                    
+            }
+                    
+            //欲しいグッズ一覧をitemsテーブルに保存
+            $wants = $request['wants'];
+            $wantIds = [];
+            foreach ($wants as $item_name) {
+                $want = Item::firstOrCreate(['name' => $item_name]);
+                $wantIds[] = $want->id;
+            }
+            
+            $post->wants()->sync($wantIds);
+            
+            $gives = $request['gives'];
+            $giveIds = [];
+            foreach ($gives as $item_name) {
+                $give = Item::firstOrCreate(['name' => $item_name]);
+                $giveIds[] = $give->id;
+            }
+            
+            $post->gives()->sync($giveIds);
+        }
+        else{
+             //messageをchatsテーブルに保存
+            $request->validate([
+                'chat.message' => 'max:100'
+                ]);
+            $input_chat = $request['chat'];
+            $post->chats()->create([
+                        'user_id' => $input_chat['user_id'],
+                        'message' => $input_chat['message'],
+                    ]);
+        }
+        return redirect('/posts/' . $post->id);
+    
+    }
+    
+    public function review(ReviewRequest $request)
+    {
+         $existingReview = Review::where('post_id', $post_id)
+                            ->where('user_id', $user_id)
+                            ->first();
+
+        if ($existingReview) {
+            return redirect()->back()->with('error', 'レビューは投稿済みです');
+        }
         
+        $input_review = $request['review'];
         $review = new Review();
         $review->fill($input_review)->save();
         $proposal = Proposal::where('post_id', $input_review['post_id'])->first();
