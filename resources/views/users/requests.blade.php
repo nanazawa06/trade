@@ -7,7 +7,7 @@
         @foreach ($proposals as $proposal)
             <div class="flex flex-row rounded border shadow-md focus:ring-2">
                 <div class="rounded w-50 h-50 m-2 border shadow-md focus:ring-2 overflow-hidden">
-                    <a href="/posts/{{ $proposal->id }}"><img src="{{ $proposal->images[0]->image_url }}" alt="画像が読み込めません。"/></a>
+                    <a href="/posts/{{ $proposal->id }}"><img src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/user_icon.png') }}" alt="画像が読み込めません。"/></a>
                 </div>
                 <div class="m-4">
                     <div class="flex-auto text-lg m-2 font-semibold text-slate-900"><a href="/users/{{ $proposal->user_id }}">リクエストユーザー：{{ $proposal->user->name }}</a></div>

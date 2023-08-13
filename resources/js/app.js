@@ -9,6 +9,8 @@ Alpine.start();
 document.addEventListener('DOMContentLoaded', function() {
         const topPreview = document.querySelector(".top-preview");
         const fileInputs = document.querySelectorAll(".file");
+        const deleteButtons = document.querySelectorAll(".delete");
+        
 
         //アップロードされた画像を表示する
         function loadImg(e, uploadBox, preview, input) {
@@ -26,16 +28,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     var imgContainer = document.createElement('div');
                     var smallImg = document.createElement('img');
                     var btn = document.createElement('button');
-                    var bigImg = document.querySelector('.big-image');
+                    var bigImg = document.getElementById('big-image');
                     //アップロードした画像を一覧とは別で大きく表示する
                     //bigImgが取得できなければ作成する
                     if (! bigImg) {
                         var bigImg = document.createElement('img');
                         var bigImgContainer = document.createElement('div');
                         topPreview.appendChild(bigImgContainer);
-                        bigImgContainer.classList.add("object-cover");
+                        bigImgContainer.classList.add("aspect-square", "max-w-2xl", "bg-glay-100");
                         bigImgContainer.appendChild(bigImg);
-                        bigImg.classList.add('big-image', "object-cover");
+                        bigImg.id = 'big-image';
+                        bigImg.classList.add("absolute", "object-cover", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full");
                     }
                     bigImg.src = fileURL;
                     
@@ -43,14 +46,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     imgContainer.appendChild(smallImg);
                     imgContainer.appendChild(btn);
                     preview.appendChild(imgContainer);
-                    imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "mt-5", "overflow-hidden", "bg-black", "rounded-5");
-                    smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full", "w-full");
+                    imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "overflow-hidden", "rounded-5");
+                    smallImg.classList.add("small-image", "absolute", "w-full", "bg-slate-100", "z-0");
                     smallImg.src = fileURL;
                     
                     //画像とセットで削除ボタンを表示する
-                    btn.classList.add("delete", "relative");
+                    btn.classList.add("delete", "absolute", "right-0", "bg-gray-400", "rounded-full", "z-10");
+                    btn.innerHTML = '<x-delete_icon/>';
                     btn.setAttribute('data-image', fileURL);
-                    btn.textContent = '削除';
+                    //btn.textContent = '削除';
                     
                     //小さい画像がクリックされると大きい画像を変更する
                     smallImg.onclick = function() {
@@ -93,6 +97,17 @@ document.addEventListener('DOMContentLoaded', function() {
             // ドラッグがエリアから離れた時の処理
             uploadBox.addEventListener("dragleave", dragleave, false);
             num++;
+        });
+        
+        deleteButtons.forEach(function(btn){
+            btn.onclick = function(){
+                console.log('button clicked');
+                const previewElement = btn.parentElement.parentElement;
+                btn.parentNode.remove();
+                previewElement.classList.add("hidden");
+                previewElement.nextElementSibling.classList.remove("hidden");
+                previewElement.nextElementSibling.getElementsByClassName('file').value = '';
+            }
         });
         
         function dragover(e){ // ドラッグした時に背景色を変える
