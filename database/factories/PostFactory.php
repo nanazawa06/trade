@@ -21,6 +21,7 @@ class PostFactory extends Factory
     {
         return [
             'description' => fake()->paragraph,
+            'status' => 'trading',
             'user_id' => rand(1, 2),
             'state_id' => rand(1, 5),
         ];

@@ -144,7 +144,7 @@ class PostController extends Controller
             
             $post->gives()->sync($giveIds);
         }
-        else{
+        elseif ($request->has(['chat'])){
              //messageをchatsテーブルに保存
             $request->validate([
                 'chat.message' => 'max:200'
@@ -154,9 +154,15 @@ class PostController extends Controller
                         'user_id' => $input_chat['user_id'],
                         'message' => $input_chat['message'],
                     ]);
+        }else{
+            //出品を停止する
+            $post->status = 'finished';
+            $post->save();
+            return redirect('/');
         }
+        
+        
         return redirect('/posts/' . $post->id);
-    
     }
     
     public function review(ReviewRequest $request)

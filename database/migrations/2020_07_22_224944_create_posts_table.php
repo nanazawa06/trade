@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('state_id')->constrained();
             $table->string('description')->nullable();
+            $table->enum('status', ['trading', 'finished'])->default('trading');
             $table->timestamps();
             
         });
