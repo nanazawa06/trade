@@ -41,8 +41,7 @@ Route::controller(ProposalController::class)->group(function(){
     Route::get('/posts/requests/{proposal}', 'showRequest')->name('show.request');
     Route::get('/users/deals', 'indexDealing')->name('index.deals'); 
     Route::get('/posts/{proposal}/deal', 'showDealing')->name('dealing');
-    Route::post('/posts/{proposal}/deal', 'startDeal')->name('start.deal');
-    Route::put('/posts/{proposal}/deal', 'messageToDeal')->name('deal.message');
+    Route::put('/posts/{proposal}/deal', 'updateDeal')->name('update.deal');
     Route::post('/users/requests', 'storeRequest')->name('store.request');
 });
     
@@ -62,8 +61,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // googleへのリダイレクト
-Route::get('/auth/google', 'App\Http\Controllers\GoogleLoginController@redirectToGoogle');
+Route::get('/auth/google', [GoogleLoginController::class, 'redirectToGoogle']);
 // 認証後の処理
-Route::get('/auth/google/callback', 'App\Http\Controllers\GoogleLoginController@handleGoogleCallback');
+Route::get('/auth/google/callback', [GoogleLoginController::class, 'handleGoogleCallback']);
 
 require __DIR__.'/auth.php';

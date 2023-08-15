@@ -31,7 +31,10 @@ class PostController extends Controller
     
      public function show(Post $post)
     {
-        return view('posts.show')->with(['post' => $post]);
+        return view('posts.show')->with([
+            'post' => $post,
+            'review_score' => $post->user->averageScore()
+            ]);
     }
 
     public function create()
@@ -158,18 +161,17 @@ class PostController extends Controller
     
     public function review(ReviewRequest $request)
     {
-         $existingReview = Review::where('post_id', $post_id)
-                            ->where('user_id', $user_id)
+        $input_review = $request['review'];
+        $existingReview = Review::where('proposal_id', $input_review['proposal_id'])
                             ->first();
 
         if ($existingReview) {
             return redirect()->back()->with('error', 'レビューは投稿済みです');
         }
         
-        $input_review = $request['review'];
         $review = new Review();
         $review->fill($input_review)->save();
-        $proposal = Proposal::where('post_id', $input_review['post_id'])->first();
+        $proposal = Proposal::find($input_review['proposal_id'])->first();
         $proposal->status = 'finished';
         $proposal->save();
         return redirect('/');

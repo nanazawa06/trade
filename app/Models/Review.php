@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Review;
 
 class Review extends Model
 {
@@ -13,7 +14,7 @@ class Review extends Model
     protected $fillable = [
         'sender_id',
         'receiver_id',
-        'post_id',
+        'proposal_id',
         'score',
         'comment'
         ];
@@ -25,5 +26,9 @@ class Review extends Model
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
+    }
+    public function proposal()
+    {
+        return $this->belongsTo(Proposal::class);
     }
 }
