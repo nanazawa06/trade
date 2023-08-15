@@ -19,9 +19,10 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(Area $area): View
+    public function create(): View
     {
-        return view('auth.register')->with(['areas' => $area->get()]);
+        $areas = Area::all();
+        return view('auth.register')->with(['areas' => $areas]);
     }
 
     /**
