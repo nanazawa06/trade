@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <x-header>
-    <div class="p-10">
+    <div class="m-10">
         <div class="serch">
             <form action="{{ route('index') }}" method=GET>
                 @csrf
@@ -35,12 +35,12 @@
         <div class="grid justify-center gap-1 grid-cols-3 mt-4 md:grid-cols-4 gap-5 lg:grid-cols-5">
          @foreach($posts as $post)
             <div class="rounded border shadow-md">
-                <div class="relative rounded m-2 border shadow-md aspect-square overflow-hidden">
+                <div class="relative rounded m-1 border shadow-md aspect-square overflow-hidden">
                     <a href="/posts/{{ $post->id }}"><img src="{{ $post->images[0]->image_url }}"
                     class="absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
-                    <p class="flex-auto text-lg font-semibold text-slate-900"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
+                    <p class="flex-auto text-base p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
                 </div>
             </div>
         @endforeach
@@ -48,4 +48,6 @@
         <div class='paginate'>
             {{ $posts->links() }}
         </div>
+    </div>
+    <script src='/js/app.js'></script>
 </x-header>

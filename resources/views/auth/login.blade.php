@@ -45,7 +45,7 @@
         </div>
         <div class="flex justify-center items-center">
           <span class="w-full border border-black"></span>
-          <span class="px-4">もしくは</span>
+          <span class="px-4 w-fit">もしくは</span>
           <span class="w-full border border-black"></span>
         </div>
         
