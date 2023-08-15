@@ -19,13 +19,14 @@ class Post extends Model
     
     protected $fillable = [
         'description',
+        'status',
         'user_id',
         'state_id',
         ];
         
     public function getLatest($wants=null, $gives=null, $area=null, $limit_count = 20)
     {
-        $posts = Post::with('images')->orderBy('created_at', 'DESC')->paginate($limit_count);
+        $posts = Post::with('images')->where('status', 'trading')->orderBy('created_at', 'DESC')->paginate($limit_count);
         
         $query = Post::query();
 
@@ -65,7 +66,7 @@ class Post extends Model
             }
         }
         
-        return $posts = $query->paginate($limit_count);
+        return $posts = $query->where('status', 'trading')->paginate($limit_count);
         
     }
         

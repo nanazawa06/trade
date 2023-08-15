@@ -12,10 +12,22 @@
             @endforeach
         </div>
         <div class="flex flex-col items-center md:w-2/3 xl:w-2/5 lg:w-1/2">
-          <form action="/" method="POST" class="text-right">
-              <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit md:mt-2 lg:mr-6 md:mr-6">編集する</button>
-          </form>
-        
+          @if (Auth::check() && Auth::id() == $post->user->id)
+            <ul class="flex items-center space-x-8 my-2">
+              <li>
+                <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit md:mt-2 lg:mr-6 md:mr-6">
+                  <a href="/posts/{{ $post->id }}/edit">編集する</a>
+                </button>
+              </li>
+              <li>
+                <form action="/posts/{{ $post->id }}" method="POST" class="text-right">
+                  @csrf
+                  @method('PUT')
+                  <input type=submit value="出品を停止" class="text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-4 border border-red-500 rounded md:mt-2">
+                </form>
+              </li>
+            </ul>
+          @endif
           <div class="md:text-lg md: w-full lg:w-11/12" style="max-width:700px;">
             <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
                 <p class="font-medium text-normal w-1/3 lg:w-1/4">譲るグッズ</p>
