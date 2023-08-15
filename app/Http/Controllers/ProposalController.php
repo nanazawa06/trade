@@ -56,7 +56,6 @@ class ProposalController extends Controller
         //リクエストが承諾されたときの処理
         //proposalsテーブルのstatusをdealingに変更する
         if ($proposal->status == 'requesting'){
-            echo "start";
             $proposal->status = 'dealing';
             $proposal->save();
             return view('posts.deal')->with([
@@ -64,7 +63,6 @@ class ProposalController extends Controller
                 'review_score' => $proposal->user->averageScore(),
                 ]);
         }elseif ($request->has(['chat'])) {
-            echo "chat";
             //messageをchatsテーブルに保存
             $input_chat = $request['chat'];
             $proposal->chats()->create([
@@ -73,7 +71,6 @@ class ProposalController extends Controller
                     ]);
             return redirect("/posts/" . $proposal->id . "/deal");
         }else{
-            echo "canceled";
             //取引がキャンセルされたときの処理
             $proposal->status = 'rejected';
             $proposal->save();

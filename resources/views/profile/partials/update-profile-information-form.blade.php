@@ -39,6 +39,16 @@
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <div class="mt-2">
+            <x-input-label for="area" :value="__('Address')" />
+            <select name="area" class="p-2 rounded w-full border border-gray-300">
+                <option value="{{ $user->area->id ? $user->area->id : '' }}">{{ $user->area->prefecture ? $user->area->prefecture : '所在地を選択' }}</option>
+                @foreach ($areas as $prefecture)
+                    <option class="p-3 rounded border border-gray-300" value="{{ $prefecture->id }}">{{ $prefecture->prefecture }}</option>
+                @endforeach
+            </select>
+        </div>
+        
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />

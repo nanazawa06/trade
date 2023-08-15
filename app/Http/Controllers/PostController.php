@@ -97,7 +97,7 @@ class PostController extends Controller
         //出品の編集を反映
         if ($request->input('state_id')){
             $request->validate([
-                'description' => 'max:500',
+                'description' => 'nullable|max:500',
                 'state_id' => 'required',
                 'images.*' => 'mimes:jpg,png,gif|required|min:1',
                 'gives.*' => 'required|max:30',
@@ -147,7 +147,7 @@ class PostController extends Controller
         else{
              //messageをchatsテーブルに保存
             $request->validate([
-                'chat.message' => 'max:100'
+                'chat.message' => 'max:200'
                 ]);
             $input_chat = $request['chat'];
             $post->chats()->create([

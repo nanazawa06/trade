@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Cloudinary;
+use App\Models\Area;
 
 class ProfileController extends Controller
 {
@@ -17,8 +18,10 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $areas = Area::all();
         return view('profile.edit', [
             'user' => $request->user(),
+            'areas' => $areas,
         ]);
     }
 
@@ -36,13 +39,16 @@ class ProfileController extends Controller
 
         $path = null;
         if ($request->hasFile('picture')) {
-            //$path = $request->file('picture')->store('profile-icons', 'public');
             $path = Cloudinary::upload($request->file('picture')->getRealPath())->getSecurePath();
             $request->user()->profile_icon = $path;
         }
         
         if ($request->input('profile')){
             $request->user()->profile = $request->input('profile');
+        }
+        
+        if ($request->input('area')){
+            $request->user()->area_id = $request->input('area');
         }
         
         $request->user()->save();

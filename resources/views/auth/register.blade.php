@@ -40,12 +40,12 @@
         </div>
 
         <div>
-                    <select name="area_id" class="p-3 rounded border border-gray-300">
-                        <option value="">所在地</option>
-                        @foreach ($areas as $prefecture)
-                            <option class="p-3 rounded border border-gray-300" value="{{ $prefecture->id }}">{{ $prefecture->prefecture }}</option>
-                        @endforeach
-                    </select>
+            <select name="area_id" class="p-3 mt-4 rounded border border-gray-300">
+                <option value="">所在地</option>
+                @foreach ($areas as $prefecture)
+                    <option class="p-3 rounded border border-gray-300" value="{{ $prefecture->id }}">{{ $prefecture->prefecture }}</option>
+                @endforeach
+            </select>
         </div>
         
         <div class="flex items-center justify-end mt-4">
@@ -54,16 +54,16 @@
             </a>
 
             <x-primary-button class="ml-4">
-                {{ __('送信する') }}
+                {{ __('登録する') }}
             </x-primary-button>
         </div>
         
         <div class="flex justify-center items-center">
           <span class="w-full border border-black"></span>
-          <span class="px-4">もしくは</span>
+          <span class="px-4">or</span>
           <span class="w-full border border-black"></span>
         </div>
-        <div class="mb-3">
+        <div class="mt-4">
             <a href='auth/google' class="flex flex-wrap justify-center w-full border border-gray-300 hover:border-gray-500 px-2 py-2 rounded-md">
               <img class="w-5 mr-2" src="https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPh6fcXIfb5vwpbMl4xl9H9TRFPc5NOO8Sb3VSgIBrfRYvW6cUA">
               Googleで登録

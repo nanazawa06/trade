@@ -23,20 +23,22 @@ use App\Http\Controllers\GoogleLoginController;
     return view('posts.index');
 });
 */
-Route::controller(PostController::class)->group(function(){
-    Route::get('/', 'index')->name('index');
+Route::get('/', [PostController::class, 'index'])->name('index');
+
+Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::post('/posts', 'store')->name('store');
     Route::get('/posts/create', 'create')->name('create');
-    Route::get('/posts/{post}', 'show')->name('show');
     Route::put('/posts/{post}', 'update')->name('update');
     Route::delete('/posts/{post}', 'delete')->name('delete');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::post('/users/reviews', 'review')->name('review');
    
 });
-Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->name('index.reviews');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('show');
 
-Route::controller(ProposalController::class)->group(function(){
+Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->middleware(['auth'])->name('index.reviews');
+
+Route::controller(ProposalController::class)->middleware(['auth'])->group(function(){
     Route::get('/users/requests',  'indexRequests')->name('index.requests');
     Route::get('/posts/requests/{proposal}', 'showRequest')->name('show.request');
     Route::get('/users/deals', 'indexDealing')->name('index.deals'); 
@@ -46,9 +48,6 @@ Route::controller(ProposalController::class)->group(function(){
 });
     
 Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
-
-
-
 
 Route::get('/dashboard', function () {
     return view('/dashbord');
