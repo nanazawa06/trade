@@ -3,7 +3,18 @@
         <div class="grid grid-cols-4 gap-2 w-full mx-3 md:w-2/3 lg:w-1/2">
             <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100 md:">
                 <img src="{{ $post->images[0]->image_url }}" alt="画像が読み込めませんでした" id="main-image" 
-                  class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full w-full" loading="lazy" />
+                  class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 w-full w-full" loading="lazy" />
+                @if(Auth::check())
+                    @if(isset($product->like_products[0]))
+                        <a class="toggle_wish" product_id="{{ $product->id }}" like_product="1">
+                             <i class="fas fa-heart"></i>
+                        </a>
+                    @else
+                        <a class="toggle_wish" product_id="{{ $product->id }}" like_product="0">
+                            <i  class="far fa-heart"></i>
+                        </a> 
+                    @endif
+                @endif  
             </div>
             @foreach ($post->images as $image )
               <div class="relative aspect-square h-full w-full mx-auto bg-glay-100 rounded-5">
