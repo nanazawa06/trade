@@ -37,7 +37,7 @@
         {{ $user->profile }}
     </div>
     <hr>
-    <div class="grid justify-center mt-5 mx-3 gap-1 grid-cols-3 md:grid-cols-4 gap-5 lg:grid-cols-5">
+    <div class="grid justify-center mt-5 mx-3 gap-1 grid-cols-3 md:grid-cols-4 gap-5 lg:grid-cols-5 md:m-8 lg:m-10">
         @foreach($user->posts as $post)
            <div class="rounded border shadow-md">
                <div class="rounded w-50 h-50 m-2 border shadow-md overflow-hidden">
