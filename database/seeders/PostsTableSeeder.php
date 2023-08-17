@@ -19,7 +19,7 @@ class PostsTableSeeder extends Seeder
         //Post::factory()->count(4)->create();
         //for ($i=1; $i < 10; $i++){
         //$post = 
-        Post::factory()->count(10)
+        Post::factory()->count(5)
             ->withItems()
             ->create();
         //}

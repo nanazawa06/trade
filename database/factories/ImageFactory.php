@@ -17,7 +17,7 @@ class ImageFactory extends Factory
     public function definition()
     {
         return [
-            'image_url' => 'https://picsum.photos/640/400/?random'
+            'image_url' => 'https://lp-cms-production.imgix.net/2019-06/554369495_full.jpg'
         ];
     }
 }

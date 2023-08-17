@@ -8,20 +8,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user_page', ['user' => Auth::user()->id])" :active="request()->routeIs('user_page')">
-                        {{ __('ユーザーページ') }}
+                        {{ __('マイページ') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('index.likes')" :active="request()->routeIs('index.likes')">
+                        {{ __('いいね！') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('index.requests')" :active="request()->routeIs('index.requests')">
-                        {{ __('リクエスト一覧') }}
+                        {{ __('リクエスト') }}
                     </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('index.deals')" :active="request()->routeIs('index.deals')">
-                        {{ __('取引一覧') }}
+                        {{ __('取引中') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index.reviews')" :active="request()->routeIs('index.reviews')">
-                        {{ __('レビュー一覧') }}
+                        {{ __('レビュー') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -75,8 +74,20 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('user_page', ['user' => Auth::id()])" :active="request()->routeIs('user_page')">
+                {{ __('マイページ') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index.likes')" :active="request()->routeIs('index.likes')">
+                {{ __('いいね！') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index.requests')" :active="request()->routeIs('index.requests')">
+                {{ __('リクエスト') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index.deals')" :active="request()->routeIs('index.deals')">
+                {{ __('取引中') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index.reviews')" :active="request()->routeIs('index.reviews')">
+                {{ __('レビュー') }}
             </x-responsive-nav-link>
         </div>
 

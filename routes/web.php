@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,15 +28,18 @@ Route::get('/', [PostController::class, 'index'])->name('index');
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
     Route::post('/posts', 'store')->name('store');
+    Route::post('/posts/like', 'like')->name('post.like');
     Route::get('/posts/create', 'create')->name('create');
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::post('/users/reviews', 'review')->name('review');
-   
 });
+
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('show');
 
 Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->middleware(['auth'])->name('index.reviews');
+
+Route::get('/users/likes', [LikeController::class,'indexLikes'])->middleware(['auth'])->name('index.likes');
 
 Route::controller(ProposalController::class)->middleware(['auth'])->group(function(){
     Route::get('/users/requests',  'indexRequests')->name('index.requests');

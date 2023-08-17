@@ -11,6 +11,7 @@ use App\Models\Item;
 use App\Models\Proposal;
 use App\Models\State;
 use App\Models\Chat;
+use App\Models\Like;
 use Cloudinary;
 
 class Post extends Model
@@ -98,6 +99,14 @@ class Post extends Model
     {
         return $this->belongsToMany(Item::class, 'gives');
     }
-    
+     public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    //いいねされているかを判定するメソッド。
+    public function isLikedBy($user): bool 
+    {
+        return Like::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
+    }
     
 }

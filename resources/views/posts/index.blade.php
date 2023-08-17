@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <x-header>
+    <head>
+    <style type="text/css">
+        i{
+            padding: 10px;
+            color: #EF4444;
+        }
+    </style>
+</head>
     <div class="m-10">
         <div class="serch">
             <form action="{{ route('index') }}" method=GET>

@@ -20,7 +20,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'description' => fake()->paragraph,
+            'description' => fake()->word,
             'status' => 'trading',
             'user_id' => rand(1, 2),
             'state_id' => rand(1, 5),
@@ -29,9 +29,9 @@ class PostFactory extends Factory
     public function withItems()
     {
         return $this->afterCreating(function (Post $post) {
-            $wantItems = \App\Models\Item::factory()->count(3)->create(); // create 3 items for ‘wants’
+            $wantItems = \App\Models\Item::factory()->count(2)->create(); // create 3 items for ‘wants’
             $post->wants()->attach($wantItems);
-            $giveItems = \App\Models\Item::factory()->count(3)->create(); // create 3 items for ‘gives’
+            $giveItems = \App\Models\Item::factory()->count(2)->create(); // create 3 items for ‘gives’
             $post->gives()->attach($giveItems);
         });
     }

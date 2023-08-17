@@ -2,6 +2,10 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+
 window.Alpine = Alpine;
 
 Alpine.start();
@@ -11,15 +15,11 @@ const mainImage = document.querySelector(".main-image");
 const fileInputs = document.querySelectorAll(".file");
 const subImages = document.querySelectorAll(".sub-image");
 
-console.log(fileInputs);
 //小さい画像がクリックされると大きい画像をクリックされた画像に変更する
 subImages.forEach(function(image){
-    console.log(image);
     image.onclick = function(event) {
         event.preventDefault();
-        console.log(event);
         mainImage.src = event.target.getAttribute('src');
-        console.log(event.target.getAttribute('src'));
         };
 });
 
@@ -60,7 +60,6 @@ function loadImg(e, uploadBox, preview, input) {
                 deleteImage(image, uploadBox, preview);
                 input.value = '';
                 });
-            console.log('show.loadImg');
         };
         reader.readAsDataURL(file);
     }
@@ -68,7 +67,6 @@ function loadImg(e, uploadBox, preview, input) {
 //ボタンのdata-imageと同じsrcをもつ画像を親要素のdivと一緒に削除
 function deleteImage(image, uploadBox, preview) {
     const imageList = document.querySelectorAll(`img[src="${image}"]`);
-    console.log(imageList);
     imageList.forEach(function(element) {
         element.parentNode.remove();
     });
@@ -103,3 +101,32 @@ function dragleave(e){  // ドラッグがエリアから離れたら背景色�
     this.style.background = "#fff";
 }
 
+
+$(function () {
+  let like = $('.like-toggle');
+  let likePostId;
+  like.on('click', function () { 
+    let $this = $(this);
+    likePostId = $this.data('post-id'); //iタグに仕込んだdata-post-idの値を取得
+    //ajax処理スタート
+    $.ajax({
+      headers: { 
+        'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+      },  //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
+      url: '/posts/like',
+      method: 'POST',
+      data: { //サーバーに送信するデータ
+        'post_id': likePostId //いいねされた投稿のidを送る
+      },
+    })
+    //通信成功した時の処理
+    .done(function (data) {
+      $this.toggleClass('liked'); //likedクラスのON/OFF切り替え。
+      $this.next('.like-counter').html(data.post_likes_count);
+    })
+    //通信失敗した時の処理
+    .fail(function () {
+      console.log('fail'); 
+    });
+  });
+  });
