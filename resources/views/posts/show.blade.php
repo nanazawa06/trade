@@ -1,9 +1,9 @@
 <x-header>
     <div class=" mt-5 mx-3 md:mt-8 md:mx-5 lg:flex lg:mx-8 lg:justify-center lg:mx-5 lg:items-start"> 
         <div class="grid grid-cols-4 gap-2 w-full mx-3 md:w-2/3 lg:w-1/2">
-            <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100 md:">
+            <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100">
                 <img src="{{ $post->images[0]->image_url }}" alt="画像が読み込めませんでした" id="main-image" 
-                  class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full w-full" loading="lazy" />
+                  class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full z-0" loading="lazy" />
             </div>
             @foreach ($post->images as $image )
               <div class="relative aspect-square h-full w-full mx-auto bg-glay-100 rounded-5">
@@ -12,22 +12,43 @@
             @endforeach
         </div>
         <div class="flex flex-col items-center md:w-2/3 xl:w-2/5 lg:w-1/2">
-          @if (Auth::check() && Auth::id() == $post->user->id)
-            <ul class="flex items-center space-x-8 my-2">
+            <ul class="flex items-center space-x-3 mr-auto mt-4 my-2">
               <li>
-                <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit md:mt-2 lg:mr-6 md:mr-6">
-                  <a href="/posts/{{ $post->id }}/edit">編集する</a>
-                </button>
+                  @auth
+                    @if (!$post->isLikedBy(Auth::user()))
+                      <span class="likes flex gap-2 items-center bg-slate-300 rounded-xl ml-3 pr-3">
+                          <i class="fa fa-heart p-2 rounded-full text-white text-2xl like-toggle md:text-3xl" data-post-id="{{ $post->id }}"></i>
+                        <span class="like-counter -ml-2 text-lg">{{$likes}}</span>
+                      </span><!-- /.likes -->
+                    @else
+                      <span class="likes flex gap-2 items-center bg-slate-300 rounded-xl ml-3 pr-3">
+                          <i class="liked fa fa-heart p-2 rounded-full text-red-500 text-2xl like-toggle md:text-3xl" data-post-id="{{ $post->id }}"></i>
+                        <span class="like-counter -ml-2 text-lg">{{$likes}}</span>
+                      </span><!-- /.likes -->
+                    @endif
+                  @endauth
+                  @guest
+                    <span class="likes flex gap-2 items-center bg-slate-300 rounded-xl ml-3 pr-3">
+                        <i class="fa fa-heart p-2 rounded-full text-white text-2xl like-toggle md:text-3xl"></i>
+                      <span class="like-counter -ml-2 text-lg">{{$likes}}</span>
+                    </span><!-- /.likes -->
+                  @endguest
               </li>
-              <li>
-                <form action="/posts/{{ $post->id }}" method="POST" class="text-right">
-                  @csrf
-                  @method('PUT')
-                  <input type=submit value="出品を停止" class="text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-4 border border-red-500 rounded md:mt-2">
-                </form>
-              </li>
+              @if (Auth::check() && Auth::id() == $post->user->id)
+                  <li>
+                    <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit lg:mr-6 md:mr-6 md:ml-5">
+                      <a href="/posts/{{ $post->id }}/edit">編集する</a>
+                    </button>
+                  </li>
+                  <li>
+                    <form action="/posts/{{ $post->id }}" method="POST" class="text-right">
+                      @csrf
+                      @method('PUT')
+                      <input type=submit value="出品を停止" class="text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-3 border border-red-500 rounded">
+                    </form>
+                  </li>
+              @endif
             </ul>
-          @endif
           <div class="md:text-lg md: w-full lg:w-11/12" style="max-width:700px;">
             <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
                 <p class="font-medium text-normal w-1/3 lg:w-1/4">譲るグッズ</p>

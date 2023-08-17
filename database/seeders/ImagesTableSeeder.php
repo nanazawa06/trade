@@ -18,7 +18,7 @@ class ImagesTableSeeder extends Seeder
     {
         foreach( Post::all() as $post ){
             Image::factory()
-                ->count(3)
+                ->count(2)
                 ->for($post,'imageable')
                 ->create();
         }
