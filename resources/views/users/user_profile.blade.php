@@ -47,7 +47,7 @@
                    <p class="flex-auto text-base"><a href="/posts/{{ $post->id }}">求：{{$post->wants[0]->name}}</a></p>
                </div>
            </div>
-       @endforeach
+        @endforeach
     </div>
     <script src="/js/app.js"></script>
 </x-header>
