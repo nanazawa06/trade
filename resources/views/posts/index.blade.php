@@ -39,7 +39,7 @@
             <div class="rounded border shadow-md">
                 <div class="relative rounded m-1 border shadow-md aspect-square overflow-hidden">
                     <a href="/posts/{{ $post->id }}"><img src="{{ $post->images[0]->image_url }}"
-                    class="absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
+                    class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
                     <p class="flex-auto text-base p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>

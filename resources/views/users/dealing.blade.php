@@ -9,7 +9,7 @@
                 <div class="flex flex-row gap-5 items-center relative xl:gap-10">
                   <div class="w-1/5 aspect-square flex-shrink-0 " style="min-width:100px;">
                     <a href="/posts/{{ $proposal->id }}/deal">
-                      <img class="w-full h-full" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
+                      <img class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
                     </a>
                   </div>
                   <div class="flex flex-col gap-1">

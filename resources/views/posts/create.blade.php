@@ -212,7 +212,7 @@
               </div>
           </div>
       @enderror
-      <div class="text-center mt-2">
+      <div class="text-center my-4">
           <input type=submit value="保存" class=" hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-4 border border-red-500 rounded">
       </div>
     </form>

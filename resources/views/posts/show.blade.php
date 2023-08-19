@@ -3,11 +3,11 @@
         <div class="grid grid-cols-4 gap-2 w-full mx-3 md:w-2/3 lg:w-1/2">
             <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100">
                 <img src="{{ $post->images[0]->image_url }}" alt="画像が読み込めませんでした" id="main-image" 
-                  class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full z-0" loading="lazy" />
+                  class="main-image absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full z-0" loading="lazy" />
             </div>
             @foreach ($post->images as $image )
               <div class="relative aspect-square h-full w-full mx-auto bg-glay-100 rounded-5">
-                  <img src="{{ $image->image_url }}" class="sub-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full bg-slate-100" loading="lazy" />
+                  <img src="{{ $image->image_url }}" class="sub-image absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full bg-slate-100" loading="lazy" />
               </div>
             @endforeach
         </div>
@@ -185,7 +185,7 @@
               </div>
           </div>
         @enderror
-        <div class="bg-white w-full mb-8" style="min-width:400px;">
+        <div class="bg-white w-full mb-8" style="max-width:400px;">
             <div class=" border-x border-t mt-5">
                <table class="table-auto w-full ">
                   <tbody>
@@ -234,7 +234,7 @@
             @endforeach
           @enderror
           <div>
-              <label for="give" class="text-sm font-medium text-gray-900 block mx-7 mb-2">譲るグッズ</label>
+              <label for="give" class="text-sm font-medium text-gray-900 block mx-7 my-2">譲るグッズ</label>
               <input type="text" id="give" name="offer[give_item]" value="{{request('search')}}" 
               class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md">
           </div>
@@ -251,7 +251,7 @@
             @endforeach
           @enderror
           
-          <label class="mb-3 mx-7 block text-xl font-semibold text-[#07074D]">
+          <label class="my-3 mx-7 block text-xl font-semibold text-[#07074D]">
             画像をアップロード
           </label>
           <div class="flex-1">

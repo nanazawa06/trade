@@ -3,7 +3,7 @@
       @if ( $post->images[0])
         <div class="aspect-square max-w-2xl relative bg-gray-100">
             <img src="{{ $post->images[0]->image_url }}" alt="画像が読み込めませんでした" id="big-image" 
-              class="absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" loading="lazy" />
+              class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" loading="lazy" />
          </div>
       @endif
     </div>
