@@ -158,10 +158,14 @@ class PostController extends Controller
                         'user_id' => $input_chat['user_id'],
                         'message' => $input_chat['message'],
                     ]);
-        }else{
-            //キャンセルされた場合
+        }elseif ($post->status == 'trading'){
             //出品を停止する
             $post->status = 'finished';
+            $post->save();
+            return redirect('/');
+        }else{
+            //出品を再開する
+            $post->status = 'trading';
             $post->save();
             return redirect('/');
         }

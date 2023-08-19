@@ -41,11 +41,11 @@
                     </button>
                   </li>
                   <li>
-                    <form action="/posts/{{ $post->id }}" method="POST" class="text-right">
-                      @csrf
-                      @method('PUT')
-                      <input type=submit value="出品を停止" class="text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-3 border border-red-500 rounded">
-                    </form>
+                      <form action="/posts/{{ $post->id }}" method="POST" class="text-right">
+                        @csrf
+                        @method('PUT')
+                        <input type=submit value="{{ $post->status == 'trading' ? '出品を停止' : '出品を再開' }}" class="text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-3 border border-red-500 rounded">
+                      </form>
                   </li>
               @endif
             </ul>
