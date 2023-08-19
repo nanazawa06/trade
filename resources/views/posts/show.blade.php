@@ -212,7 +212,7 @@
           </div>
         </div>
     </div>
-    <div class="my-5 mx-2 p-5 md:mx-auto max-w-5xl shadow-md border border-[#e0e0e0]">
+    <div class="my-5 mx-1 p-2 md:mx-auto max-w-5xl shadow-md border border-[#e0e0e0]">
       <div class="text-lg font-bold text-center mt-3 mb-3">出品者にトレードリクエストを送る</div>
       <form action="{{ route('store.request') }}" method="POST" enctype="multipart/form-data">
           @csrf
@@ -255,9 +255,9 @@
             画像をアップロード
           </label>
           <div class="flex-1">
-            <div class="grid grid-cols-4 gap-2">
+            <div class="grid grid-cols-4 gap-1 md:gap-2 h-20 sm:h-40 md:h-52 lg:h-60 md:mx-8 xl:mx-11">
               <div id="preview0" class="hidden"></div>
-              <div class="upload-box0 relative grid grid-cols-1 mx-2 aspect-square">
+              <div class="upload-box0 relative grid grid-cols-1 mx-2 aspect-square max-h-24 sm:max-h-full">
                 <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                     <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
                         <div class='flex flex-col items-center justify-center pt-7'>
@@ -272,7 +272,7 @@
               </div>
   
               <div id="preview1" class="hidden"></div>
-              <div class="upload-box1 relative grid grid-cols-1 mx-2 aspect-square">
+              <div class="upload-box1 relative grid grid-cols-1 mx-2 aspect-square max-h-24 sm:max-h-full">
                 <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                     <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
                         <div class='flex flex-col items-center justify-center pt-7'>
@@ -287,7 +287,7 @@
               </div>
   
               <div id="preview2" class="hidden"></div>
-              <div class="upload-box2 relative grid grid-cols-1 mx-2 aspect-square">
+              <div class="upload-box2 relative grid grid-cols-1 mx-2 aspect-square max-h-24 sm:max-h-full">
                 <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                     <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
                         <div class='flex flex-col items-center justify-center pt-7'>
@@ -302,7 +302,7 @@
               </div>
   
               <div id="preview3" class="hidden"></div>
-              <div class="upload-box3 relative grid grid-cols-1 mx-2 aspect-square">
+              <div class="upload-box3 relative grid grid-cols-1 mx-2 aspect-square max-h-24 sm:max-h-full">
                 <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                     <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
                         <div class='flex flex-col items-center justify-center pt-7'>
@@ -317,7 +317,7 @@
               </div>
             </div>
             
-            <div class="mt-8">
+            <div class="mt-5">
                 <textarea
                     name="offer[message]"
                     rows="6"
@@ -338,7 +338,7 @@
             </div>
             <input type="hidden" name="offer[user_id]" value="{{ Auth::check() ? Auth::user()->id : 'guest' }}">
             <input type="hidden" name="offer[post_id]" value="{{ $post->id }}">
-            <div class="text-center mt-2">
+            <div class="text-center my-2">
                 <input type=submit value="リクエスト" class=" hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-4 border border-red-500 rounded">
             </div>
           </div>

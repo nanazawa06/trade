@@ -154,7 +154,7 @@
                   </div>
           
                   <div class="flex items-center">
-                      <input type="radio" name="review[score]" value="0" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="score-option-3" aria-describedby="score-option-3">
+                      <input type="radio" name="review[score]" value="1" class="h-4 w-4 border-gray-300 focus:ring-2 focus:ring-blue-300" aria-labelledby="score-option-3" aria-describedby="score-option-3">
                       <label for="score-option-3" class="text-sm font-medium text-gray-900 ml-2 block md:text-lg">
                       良くなかった
                       </label>
@@ -184,7 +184,7 @@
           </div>
           <input type="hidden" name="review[proposal_id]" value="{{ $proposal->id }}">
           <input type="hidden" name="review[sender_id]" value="{{ Auth::user()->id }}">
-          <input type="hidden" name="review[receiver_id]" value="{{ $proposal->post->user->id }}">
+          
       </form>
       <form action="/posts/{{ $proposal->id }}/deal" method="POST" class="mx-4 my-2 flex flex-col items-center">
           @csrf

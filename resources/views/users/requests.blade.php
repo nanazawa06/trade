@@ -1,6 +1,6 @@
 <x-header>
     @include('layouts.navigation')
-    <head class="w-full h-8 bg-gray-300">
+    <head class="w-full h-8">
         <h1 class="text-3xl font-bold ml-11 mt-5">リクエスト一覧</h1>
     </head>
     <div class="m-2 md:m-8 lg:m-10">
@@ -9,12 +9,12 @@
             <div class="flex flex-row gap-5 items-center relative xl:gap-10">
               <div class="w-1/5 aspect-square flex-shrink-0 " style="min-width:100px;">
                 <a href="/posts/requests/{{ $proposal->id }}">
-                  <img class="w-full h-full" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/user_icon.png') }}" alt="画像が読み込めません。"/>
+                  <img class="w-full h-full" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
                 </a>
               </div>
-              <div class="flex flex-col gap-1">
+              <div class="flex flex-col gap-1 sm:gap-2">
                   <div class="flex items-center">
-                    <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10">
+                    <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 lg:w-14 lg:h-14">
                       <a href="/users/{{ $proposal->user_id }}">
                       <img class="w-full h-full rounded-full"
                           src="{{ $proposal->user->profile_icon ? $proposal->user->profile_icon : asset('images/user_icon.png') }}"
@@ -23,7 +23,7 @@
                     </div>
                     <div class="flex flex-wrap">
                       <div class="ml-3">
-                        <p class="text-gray-900 whitespace-no-wrap text-sm md:text-lg">
+                        <p class="text-gray-900 whitespace-no-wrap text-sm md:text-lg lg:text-xl">
                           <a href="/users/{{ $proposal->user_id }}">{{ $proposal->user->name }}</a>
                         </p>
                       </div>
@@ -41,8 +41,8 @@
                     </div>
                   </div>
                     <a href="/posts/{{ $proposal->id }}/deal">
-                    <p class="text-xs text-gray-800 font-semibold md:text-lg">求：{{ $proposal->want_item }} </p>
-                    <p class="text-xs text-gray-800 md:text-lg">譲：{{ $proposal->give_item }}</p>
+                    <p class="text-xs text-gray-800 md:mb-3 font-semibold md:text-lg lg:text-xl">求：{{ $proposal->want_item }} </p>
+                    <p class="text-xs text-gray-800 font-semibold md:text-lg lg:text-xl">譲：{{ $proposal->give_item }}</p>
                     </a>
               </div>
               <form action="/posts/{{ $proposal->id }}/deal" method="POST" class="text-right">

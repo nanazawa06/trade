@@ -34,7 +34,7 @@ class Proposal extends Model
         {
             $proposals = $proposals->merge($post->proposals);
         }
-        return $proposals->sortByDesc('created_at');
+        return $proposals->filter(function($proposal){return $proposal->status == 'requesting';})->sortByDesc('created_at');
     }
     
     //取引中のデータを取得

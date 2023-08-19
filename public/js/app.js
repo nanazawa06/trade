@@ -3194,10 +3194,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var bigImg = document.createElement('img');
         var bigImgContainer = document.createElement('div');
         topPreview.appendChild(bigImgContainer);
-        bigImgContainer.classList.add("aspect-square", "max-w-2xl", "bg-glay-100");
+        bigImgContainer.classList.add("aspect-square", "relative", "max-w-2xl", "bg-glay-100");
         bigImgContainer.appendChild(bigImg);
         bigImg.id = 'big-image';
-        bigImg.classList.add("absolute", "object-cover", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "w-full");
+        bigImg.classList.add("absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "max-w-full", "max-h-full");
       }
       bigImg.src = fileURL;
 
@@ -3205,13 +3205,13 @@ document.addEventListener('DOMContentLoaded', function () {
       imgContainer.appendChild(smallImg);
       imgContainer.appendChild(btn);
       preview.appendChild(imgContainer);
-      imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "overflow-hidden", "rounded-5");
-      smallImg.classList.add("small-image", "absolute", "w-full", "bg-slate-100", "z-0");
+      imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "rounded-5");
+      smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "max-w-full", "max-h-full", "bg-slate-100", "z-0");
       smallImg.src = fileURL;
 
       //画像とセットで削除ボタンを表示する
       btn.classList.add("delete", "absolute", "right-0", "bg-gray-400", "rounded-full", "z-10");
-      btn.innerHTML = '<x-delete_icon/>';
+      btn.innerHTML = '<svg class="h-4 w-4 sm:h-8 sm:w-8 text-white p-1 "  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18" />  <line x1="6" y1="6" x2="18" y2="18" /></svg>';
       btn.setAttribute('data-image', fileURL);
       //btn.textContent = '削除';
 
