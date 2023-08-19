@@ -1,7 +1,7 @@
 <x-header>
     @include('layouts.navigation')
-    <head class="w-full h-8 bg-gray-300">
-        <h1 class="text-xl font-bold text-justify">レビュー</h1>
+    <head class="w-full h-8">
+        <h1 class="text-3xl font-bold ml-11 mt-5">レビュー</h1>
     </head>
     <div class="flex flex-col items-center">
         @foreach (Auth::user()->receive_reviews as $review)

@@ -4,7 +4,7 @@
     </head>
     <div class="flex flex-col items-center mx-3">
         <div class="aspect-square max-w-2xl relative w-full bg-slate-50 md:">
-              <img src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : null }}" alt="画像が読み込めませんでした" id="big-image" 
+              <img src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めませんでした" id="big-image" 
                 class="main-image absolute object-cover top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full" loading="lazy" />
         </div>
   
@@ -67,12 +67,12 @@
           <p class=" xl:min-w-xl">{{ $proposal->message }}</p>
         </div>
       </div>
-    　<form action="/posts/{{ $proposal->id }}/deal" method="POST" class="text-right">
+    　<form action="/posts/{{ $proposal->id }}/deal" method="POST" class="mb-5">
           @csrf
           @method('PUT')
           <input type="hidden" name="user_id" value="{{ $proposal->user_id }}">
           <div class="text-center mt-2">
-            <input type=submit value="承諾する" class="px-2 py-1 text-xs absolute right-2 bottom-1 md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
+            <input type=submit value="承諾する" class="px-2 py-1 text-xs md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
           </div>
       </form>
     </div>

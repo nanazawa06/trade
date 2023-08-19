@@ -56,9 +56,9 @@ class PostController extends Controller
         $post->user_id = $user->id;
         $post->state_id = $request->input('state_id');
         $post->save();
-        
         //画像をimagesテーブルに保存
         if ($request->hasFile('images')){
+            
             $images = $request->file('images');
             foreach ($images as $image) {
                  $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
@@ -147,6 +147,7 @@ class PostController extends Controller
             
             $post->gives()->sync($giveIds);
         }
+        //チャットが送信された場合
         elseif ($request->has(['chat'])){
              //messageをchatsテーブルに保存
             $request->validate([
@@ -158,6 +159,7 @@ class PostController extends Controller
                         'message' => $input_chat['message'],
                     ]);
         }else{
+            //キャンセルされた場合
             //出品を停止する
             $post->status = 'finished';
             $post->save();
@@ -172,30 +174,43 @@ class PostController extends Controller
     {
         $input_review = $request['review'];
         $existingReview = Review::where('proposal_id', $input_review['proposal_id'])
+                            ->where('sender_id', $input_review['sender_id'])
                             ->first();
 
         if ($existingReview) {
             return redirect()->back()->with('error', 'レビューは投稿済みです');
         }
         
+        $proposal = Proposal::find($input_review['proposal_id'])->first();
+        //取引中のユーザ両方がレビューを投稿したらステータスをfinishedにする
+        $numOfReview = Review::where('proposal_id', $input_review['proposal_id'])->count();
+        if ($numOfReview == 1){
+            $proposal->status = 'finished';
+        }
+        $proposal->save();
+        //レビュー投稿者がリクエスト送信者と同じならreceiver_idを出品者id、
+        //そうでないならreceiver_idはリクエスト送信者id
+        if ($proposal->user_id == $input_review['sender_id']){
+            $input_review['receiver_id'] = $proposal->post->user_id;
+        }else{
+            $input_review['receiver_id'] = $proposal->user_id;
+        }
         $review = new Review();
         $review->fill($input_review)->save();
-        $proposal = Proposal::find($input_review['proposal_id'])->first();
-        $proposal->status = 'finished';
-        $proposal->save();
+        
         return redirect('/');
     }
     
     public function like(Request $request)
     {
         
-        $user_id = Auth::user()->id; //1.ログインユーザーのid取得
-        $post_id = $request->post_id; //2.投稿idの取得
-        $already_liked = Like::where('user_id', $user_id)->where('post_id', $post_id)->first(); //3.
+        $user_id = Auth::user()->id; 
+        $post_id = $request->post_id;
+        $already_liked = Like::where('user_id', $user_id)->where('post_id', $post_id)->first();
     
         if (!$already_liked) { //もしこのユーザーがこの投稿にまだいいねしてなかったら
-            $like = new Like; //4.Likeクラスのインスタンスを作成
-            $like->post_id = $post_id; //Likeインスタンスにreview_id,user_idをセット
+            $like = new Like;
+            $like->post_id = $post_id;
             $like->user_id = $user_id;
             $like->save();
         } else { //もしこのユーザーがこの投稿に既にいいねしてたらdelete
@@ -206,7 +221,7 @@ class PostController extends Controller
         $param = [
             'post_likes_count' => $post_likes_count,
         ];
-        return response()->json($param); //6.JSONデータをjQueryに返す
+        return response()->json($param);
     }
 
 }

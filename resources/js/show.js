@@ -44,14 +44,14 @@ function loadImg(e, uploadBox, preview, input) {
             imgContainer.appendChild(smallImg);
             imgContainer.appendChild(btn);
             preview.appendChild(imgContainer);
-            imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "overflow-hidden", "rounded-5");
-            smallImg.classList.add("small-image", "absolute", "w-full", "w-full", "z-0", "bg-slate-100");
+            imgContainer.classList.add("relative", "h-full", "w-full", "mx-auto", "bg-slate-100");
+            smallImg.classList.add("small-image", "absolute", "top-1/2", "left-1/2", "-translate-x-1/2", "-translate-y-1/2", "max-w-full", "max-h-full", "z-0");
             smallImg.src = fileURL;
             
             //画像とセットで削除ボタンを表示する
-            btn.classList.add("delete", "p-1", "rounded", "absolute", "top-0", "right-0", "bg-glay-400", "text-white", "z-10");
+            btn.classList.add("delete", "p-0.5", "rounded-full", "absolute", "top-0", "right-0", "bg-gray-400", "text-white", "z-10");
             btn.setAttribute('data-image', fileURL);
-            btn.textContent = '削除';
+            btn.innerHTML = '<svg class="h-5 w-5 sm:h-8 sm:h-8 text-white p-1"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18" />  <line x1="6" y1="6" x2="18" y2="18" /></svg>';
                 
             // 削除ボタンが押されると画像を削除する
             btn.addEventListener('click', function(event) {

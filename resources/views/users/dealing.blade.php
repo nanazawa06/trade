@@ -1,7 +1,7 @@
 <x-header>
     @include('layouts.navigation')
-    <head class="w-full h-8 bg-gray-300">
-        <h1 class="text-xl font-bold text-justify">取引中</h1>
+    <head class="w-full h-8">
+        <h1 class="text-3xl font-bold ml-11 mt-5">取引中</h1>
     </head>
     <div class="grid grid-rows grid-gap-4 m-5">
         @foreach ($dealings as $proposal)
@@ -9,12 +9,12 @@
                 <div class="flex flex-row gap-5 items-center relative xl:gap-10">
                   <div class="w-1/5 aspect-square flex-shrink-0 " style="min-width:100px;">
                     <a href="/posts/{{ $proposal->id }}/deal">
-                      <img class="w-full h-full" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/user_icon.png') }}" alt="画像が読み込めません。"/>
+                      <img class="w-full h-full" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
                     </a>
                   </div>
                   <div class="flex flex-col gap-1">
                       <div class="flex items-center">
-                        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10">
+                        <div class="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 lg:w-14 lg:h-14">
                           <a href="/users/{{ $proposal->user_id }}">
                           <img class="w-full h-full rounded-full"
                               src="{{ $proposal->user->profile_icon ? $proposal->user->profile_icon : asset('images/user_icon.png') }}"
@@ -23,7 +23,7 @@
                         </div>
                         <div class="flex flex-wrap">
                           <div class="ml-3">
-                            <p class="text-gray-900 whitespace-no-wrap text-sm md:text-lg">
+                            <p class="text-gray-900 whitespace-no-wrap text-sm md:text-lg lg:text-xl">
                               <a href="/users/{{ $proposal->user_id }}">{{ $proposal->user->name }}</a>
                             </p>
                           </div>

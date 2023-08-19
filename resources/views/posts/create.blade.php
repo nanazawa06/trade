@@ -1,13 +1,13 @@
 <x-header>
-    <div class="top-preview mx-5 mt-5"></div>
-    <form class="py-6 px-9" action="/posts" method="POST" enctype="multipart/form-data">
+    <div class="top-preview mx-auto max-w-2xl mt-5 lg:hidden"></div>
+    <form class="mt-6 mx-2" action="/posts" method="POST" enctype="multipart/form-data">
       @csrf
         <div class="mb-6 pt-4">
             <label class="mt-3 mx-7 block text-xl font-semibold text-[#07074D]">
               画像をアップロード
             </label>
             <div class="flex-1">
-              <div class="grid grid-cols-4">
+              <div class="grid grid-cols-4 gap-1 md:gap-3 h-20 sm:h-40 md:h-52 lg:h-64 xl:h-96 mx-2 md:mx-8 xl:mx-11">
                 <div id="preview0" class="hidden"></div>
                 <div class="upload-box0 relative grid grid-cols-1 mx-2 aspect-square">
                   <div class='flex items-center justify-center w-full absolute top-0 left-0'>
@@ -217,4 +217,5 @@
       </div>
     </form>
     <script src="/js/app.js"></script>
+
 </x-header>

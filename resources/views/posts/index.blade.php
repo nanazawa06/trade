@@ -22,7 +22,7 @@
                 </div>
                 <div class="mt-3">
                     <select name="area" class="p-2 rounded border border-gray-300">
-                        <option value="">所在地から検索</option>
+                        <option value="">所在地</option>
                         @foreach ($areas as $prefecture)
                             <option class="p-3 rounded border border-gray-300" value="{{ $prefecture->id }}">{{ $prefecture->prefecture }}</option>
                         @endforeach

@@ -23,7 +23,7 @@ class PostRequest extends FormRequest
         return [
             'description' => 'nullable|max:500',
             'state_id' => 'required',
-            'images.*' => 'mimes:jpg,png,gif|required|min:1',
+            //'images.*' => 'mimes:jpg,png,gif|required|min:1',
             'gives.*' => 'required|max:30',
             'wants.*' => 'required|max:30',
             ];
