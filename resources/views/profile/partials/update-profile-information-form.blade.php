@@ -42,7 +42,7 @@
         <div class="mt-2">
             <x-input-label for="area" :value="__('Address')" />
             <select name="area" class="p-2 rounded w-full border border-gray-300">
-                <option value="{{ $user->area->id ? $user->area->id : '' }}">{{ $user->area->prefecture ? $user->area->prefecture : '所在地を選択' }}</option>
+                <option value="{{ $user->area ? $user->area->id : '' }}">{{ $user->area ? $user->area->prefecture : '所在地を選択' }}</option>
                 @foreach ($areas as $prefecture)
                     <option class="p-3 rounded border border-gray-300" value="{{ $prefecture->id }}">{{ $prefecture->prefecture }}</option>
                 @endforeach
