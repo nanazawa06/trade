@@ -49,34 +49,34 @@
                   </li>
               @endif
             </ul>
-          <div class="md:text-lg md: w-full lg:w-11/12" style="max-width:700px;">
-            <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
-                <p class="font-medium text-normal w-1/3 lg:w-1/4">譲るグッズ</p>
-                <p class="flex-auto text-sm border border-gray-300 py-1 px-2 mt-2 w-full md:text-lg">
-                    @foreach ($post->gives as $give)
-                          {{ $give->name }}
-                    @endforeach
-                </p>
+            <div class="md:text-lg md: w-full lg:w-11/12" style="max-width:700px;">
+              <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
+                  <p class="font-medium text-normal w-1/3 lg:w-1/4">譲るグッズ</p>
+                  <p class="flex-auto text-sm border border-gray-300 py-1 px-2 mt-2 w-full md:text-lg">
+                      @foreach ($post->gives as $give)
+                            {{ $give->name }}
+                      @endforeach
+                  </p>
+              </div>
+              <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
+                  <p class="font-medium text-normal w-1/3 lg:w-1/4">欲しいグッズ</p>
+                  <p class="flex-auto text-sm border border-gray-300 py-1 px-2 mt-2 w-full md:text-lg">
+                      @foreach ($post->wants as $want)
+                          {{ $want->name }}
+                      @endforeach
+                  </p>
+              </div>
             </div>
-            <div class="flex mx-4 items-center mb-2 md:mt-3 md:w-full lg:gap-3">
-                <p class="font-medium text-normal w-1/3 lg:w-1/4">欲しいグッズ</p>
-                <p class="flex-auto text-sm border border-gray-300 py-1 px-2 mt-2 w-full md:text-lg">
-                    @foreach ($post->wants as $want)
-                        {{ $want->name }}
-                    @endforeach
-                </p>
+          
+            <div class="w-full p-3 md:2/3 lg:w-full xl:w-full ">
+              <p class="text-lg font-semibold mb-3">グッズの説明</p>
+              <div class="w-full bg-slate-100 border border-gray-200">
+                  <p class="p-2 xl:min-w-xl overflow-y-scroll" style="max-height:150px;">
+                  {{ $post->description }}
+                  </p>
+              </div>
             </div>
-          </div>
-        
-          <div class="w-full p-3 md:2/3 lg:w-full xl:w-full ">
-            <p class="text-lg font-semibold mb-3">グッズの説明</p>
-            <div class="w-full bg-slate-100 border border-gray-200">
-                <p class="p-2 xl:min-w-xl overflow-y-scroll" style="max-height:150px;">
-                {{ $post->description }}
-                </p>
-            </div>
-          </div>
-          <div class="flex items-center w-full px-3 my-3  md:gap-2 bg-slate-50 md:mx-0 md:px-4 md:mt-7">
+            <div class="flex items-center w-full px-3 my-3  md:gap-2 bg-slate-50 md:mx-0 md:px-4 md:mt-7">
               <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16">
                   <a href="/users/{{ $post->user_id }}">
                   <img class="w-full h-full rounded-full"
@@ -104,18 +104,18 @@
               </div>
             </div>
             <div class="w-full">
-          <p class="flex-auto text-lg font-semibold text-slate-900 p-1.5 mt-2 ml-5 md:text-xl md:my-3">
-            コメントする
-          </p>
-        </div>
-        <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-slate-100 h-full p-2 w-full" style="max-width:700px;" >
-            <div class="flex flex-col h-full overflow-x-auto" style="min-height:100px">
+              <p class="flex-auto text-lg font-semibold text-slate-900 p-1.5 mt-2 ml-5 md:text-xl md:my-3">
+                コメントする
+              </p>
+            </div>
+          <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-slate-100 h-full p-2 w-full" style="max-width:700px;" >
+            <div id="chat-board" class="flex flex-col h-full overflow-x-auto max-h-60" style="min-height:100px">
                 <div class="flex flex-col h-full">
-                  <div class="grid grid-cols-12">
+                  <div class="grid grid-cols-12" id="messages">
                     @if ($post->chats)
                       @foreach ($post->chats as $chat)
                         @if (!Auth::check() || $chat->user_id != Auth::user()->id)
-                          <div class="col-start-1 col-end-12 rounded-lg">
+                          <div class="col-start-1 col-end-12 py-1 rounded-lg">
                               <div class="flex flex-row items-center">
                                 <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                                   <a href="/users/{{ $chat->user_id }}">
@@ -129,7 +129,7 @@
                               </div>
                             </div>
                         @else
-                            <div class="col-start-1 col-end-12 py-3 rounded-lg">
+                            <div class="col-start-2 col-end-13 py-1 rounded-lg">
                               <div class="flex items-center justify-start flex-row-reverse">
                                 <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
                                   <a href="/users/{{ $chat->user_id }}">
@@ -149,25 +149,31 @@
                   </div>
                 </div>
             </div>
-        </div>
+          </div>
     
-        <div class="w-full">
-            <form action="/posts/{{ $post->id }}" method="POST">
+          <div class="w-full">
+            <form id="message_form" action="/posts/{{ $post->id }}/chat" method="POST">
               @csrf
-              @method('PUT')
+              
               <div class="flex flex-row items-center h-16 rounded-xl w-full px-1">
                 <div class="flex-grow ml-">
                   <div class="relative w-full">
-                    <input
+                    <textarea
                       type="text"
+                      rows="1"
+                      maxlength="200"
+                      placeholder="コメントを入力"
+                      id="message_input"
                       name="chat[message]"
-                      class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
-                    />
+                      class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 resize-y"
+                      data-post-id="{{ $post->id }}"
+                    ></textarea>
                   </div>
                 </div>
                 <div class="ml-4">
                   <button
                     name="chat[user_id]"
+                    id="chat_btn"
                     value="{{ Auth::check() ? Auth::user()->id : 'guest' }}"
                     class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
                   >
@@ -176,16 +182,16 @@
                 </div>
               </div>
             </form>
-        </div>
-        @error('chat.message')
-          <div class="flex bg-blue-100 rounded-lg p-4 my-2 text-sm text-blue-700" role="alert">
-              <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-              <div>
-                  {{ $message }}
-              </div>
           </div>
-        @enderror
-        <div class="bg-white w-full mb-8" style="max-width:400px;">
+          @error('chat.message')
+            <div class="flex bg-blue-100 rounded-lg p-4 my-2 text-sm text-blue-700" role="alert">
+                <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                <div>
+                    {{ $message }}
+                </div>
+            </div>
+          @enderror
+          <div class="bg-white w-full mb-8" style="max-width:400px;">
             <div class=" border-x border-t mt-5">
                <table class="table-auto w-full ">
                   <tbody>

@@ -27,14 +27,12 @@ class Post extends Model
         
     public function getLatest($wants=null, $gives=null, $area=null, $limit_count = 20)
     {
-        $posts = Post::with('images')->where('status', 'trading')->orderBy('created_at', 'DESC')->paginate($limit_count);
-        
-        $query = Post::query();
+        $query = Post::with('images')->where('status', 'trading')->orderBy('created_at', 'DESC');
 
         if ($area) {
             $query->where('area_id', $area);
         }
-       // もしwant検索フォームにキーワードが入力されたら
+       // want検索フォームにキーワードが入力されたら
         if ($wants) {
             // 全角スペースを半角に変換
             $spaceConversion = mb_convert_kana($wants, 's');
@@ -42,33 +40,25 @@ class Post extends Model
             // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
 
-            // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
+            // 単語をループで回し、wantsリレーション先のアイテム名と部分一致するものがあれば、$queryとして保持される
             foreach($wordArraySearched as $value) {
-                $query->where('description', 'like', '%'.$value.'%')
-                ->orWhereHas('wants', function ($query) use ($value) {
+                $query->whereHas('wants', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }
         }
-        
+        //give検索フォームにキーワードが入力されたら
         if ($gives) {
-            // 全角スペースを半角に変換
             $spaceConversion = mb_convert_kana($gives, 's');
-
-            // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-
-            // 単語をループで回し、ユーザーネームと部分一致するものがあれば、$queryとして保持される
             foreach($wordArraySearched as $value) {
-                $query->where('description', 'like', '%'.$value.'%')
-                ->orWhereHas('gives', function ($query) use ($value) {
+                $query->whereHas('gives', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }
         }
         
-        return $posts = $query->where('status', 'trading')->paginate($limit_count);
-        
+        return $posts = $query->paginate($limit_count);
     }
         
     public function user()

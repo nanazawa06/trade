@@ -8,6 +8,7 @@ use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +35,10 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::post('/users/reviews', 'review')->name('review');
 });
-
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('show');
+
+Route::post('/posts/{proposal}/deal/chat', [ChatController::class, 'messagetoProposal'])->name('send.message.proposal');
+Route::post('/posts/{post}/chat', [ChatController::class, 'sendMessage'])->name('send.message.post');
 
 Route::get('/users/reviews', [ReviewController::class,'indexReviews'])->middleware(['auth'])->name('index.reviews');
 
