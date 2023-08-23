@@ -32,76 +32,89 @@
           コメントする
         </p>
       </div>
-      <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-slate-100 h-full p-2 w-full" >
-          <div class="flex flex-col h-full overflow-x-auto" style="min-height:100px">
-              <div class="flex flex-col h-full">
-                <div class="grid grid-cols-12">
-                   @if ($proposal->chats)
-                   @foreach ($proposal->chats as $chat)
-                      @if (!Auth::check() || $chat->user_id != Auth::user()->id)
-                          <div class="col-start-1 col-end-12 rounded-lg">
-                            <div class="flex flex-row items-center">
-                              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                <a href="/users/{{ $chat->user_id }}">
-                                <img
-                                 src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
-                                 class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
-                                 </a>                              </div>
-                              <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
-                                <div>{{ $chat->message }} </div>
-                              </div>
+      <div class="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-slate-100 h-full p-2 w-full" style="max-width:700px;" >
+        <div id="chat-board" class="flex flex-col h-full" style="min-height:100px">
+            <div class="flex flex-col h-full">
+              <div class="grid grid-cols-12" id="messages">
+                @if ($proposal->chats)
+                  @foreach ($proposal->chats as $chat)
+                    @if (!Auth::check() || $chat->user_id != Auth::user()->id)
+                      <div class="col-start-1 col-end-12 py-1 rounded-lg">
+                          <div class="flex flex-row items-center">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                              <a href="/users/{{ $chat->user_id }}">
+                              <img
+                               src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
+                               class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
+                               </a>                              </div>
+                            <div class="relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl">
+                              <div>{{ $chat->message }} </div>
                             </div>
                           </div>
-                      @else
-                          <div class="col-start-1 col-end-12 py-3 rounded-lg">
-                            <div class="flex items-center justify-start flex-row-reverse">
-                              <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
-                                <a href="/users/{{ $chat->user_id }}">
-                                 <img
-                                 src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
-                                 class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
-                                 </a>
-                              </div>
-                              <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
-                                <div>{{ $chat->message }}</div>
-                              </div>
+                        </div>
+                    @else
+                        <div class="col-start-2 col-end-13 py-1 rounded-lg">
+                          <div class="flex items-center justify-start flex-row-reverse">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                              <a href="/users/{{ $chat->user_id }}">
+                               <img
+                               src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
+                               class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
+                               </a>
+                            </div>
+                            <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                              <div>{{ $chat->message }}</div>
                             </div>
                           </div>
-                      @endif
+                        </div>
+                    @endif
                   @endforeach
-                  @endif
-                          
-                </div>
-              </div>
-          </div>
-      </div>
-      
-      <div class="w-full">
-          <form action="/posts/{{ $proposal->id }}/deal" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="flex flex-row items-center h-16 rounded-xl w-full px-1">
-              <div class="flex-grow ml-">
-                <div class="relative w-full">
-                  <input
-                    type="text"
-                    name="chat[message]"
-                    class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10"
-                  />
-                </div>
-              </div>
-              <div class="ml-4">
-                <button
-                  name="chat[user_id]"
-                  value="{{ Auth::check() ? Auth::user()->id : 'guest' }}"
-                  class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
-                >
-                  <span>送信</span>
-                </button>
+                @endif
               </div>
             </div>
-          </form>
+        </div>
       </div>
+
+      <div class="w-full">
+        <form id="message_form" action="/posts/{{ $proposal->id }}/deal/chat" method="POST">
+          @csrf
+          
+          <div class="flex flex-row items-center h-16 rounded-xl w-full px-1">
+            <div class="flex-grow ml-">
+              <div class="relative w-full">
+                <textarea
+                  type="text"
+                  rows="1"
+                  maxlength="200"
+                  placeholder="コメントを入力"
+                  id="message_input"
+                  name="chat[message]"
+                  class="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 pl-4 h-10 resize-y"
+                  data-proposal-id="{{ $proposal->id }}"
+                ></textarea>
+              </div>
+            </div>
+            <div class="ml-4">
+              <button
+                name="chat[user_id]"
+                id="chat_btn"
+                value="{{ Auth::check() ? Auth::user()->id : 'guest' }}"
+                class="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
+              >
+                <span>送信</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      @error('chat.message')
+        <div class="flex bg-blue-100 rounded-lg p-4 my-2 text-sm text-blue-700" role="alert">
+            <svg class="w-5 h-5 inline mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            <div>
+                {{ $message }}
+            </div>
+        </div>
+      @enderror
       <div class="flex items-center px-3 my-3  md:gap-2 bg-slate-50 md:mx-0 md:px-4 md:mt-7">
         <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16">
           <a href="/users/{{ $proposal->user_id }}">
@@ -193,4 +206,5 @@
       </form>
       </div>
     </div>
+    <script src="/js/deal.js"></script>
 </x-header>

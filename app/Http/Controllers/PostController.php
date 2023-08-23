@@ -146,23 +146,13 @@ class PostController extends Controller
             }
             
             $post->gives()->sync($giveIds);
-        }
-        //チャットが送信された場合
-        elseif ($request->has(['chat'])){
-             //messageをchatsテーブルに保存
-            $request->validate([
-                'chat.message' => 'max:200'
-                ]);
-            $input_chat = $request['chat'];
-            $post->chats()->create([
-                        'user_id' => $input_chat['user_id'],
-                        'message' => $input_chat['message'],
-                    ]);
+            
         }elseif ($post->status == 'trading'){
             //出品を停止する
             $post->status = 'finished';
             $post->save();
             return redirect('/');
+            
         }else{
             //出品を再開する
             $post->status = 'trading';
