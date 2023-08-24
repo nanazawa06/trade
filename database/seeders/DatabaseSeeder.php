@@ -23,9 +23,9 @@ class DatabaseSeeder extends Seeder
          $this->call([
             StateTableSeeder::class,
             AreaTableSeeder::class,
-            //UsersTableSeeder::class,
-            //PostsTableSeeder::class,
-            //ImagesTableSeeder::class,
+            UsersTableSeeder::class,
+            PostsTableSeeder::class,
+            ImagesTableSeeder::class,
             //ItemsTableSeeder::class,
         ]);
     }
