@@ -29,6 +29,12 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password2'),
                 'area_id' => '4',
             ],
+            [
+                'name' => 'nana',
+                'email' => 'nana@example.com',
+                'password' => Hash::make('password3'),
+                'area_id' => '10',
+            ],
         ];
 
         foreach ($users as $user) {
