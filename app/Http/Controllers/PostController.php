@@ -35,7 +35,7 @@ class PostController extends Controller
     //出品詳細画面を表示
      public function show(Post $post)
     {
-        return view('posts.$show')->with([
+        return view('posts.show')->with([
             'post' => $post,
             'likes' => $post->likes()->count(),
             'review_score' => $post->user->averageScore()

@@ -3,7 +3,7 @@
     <head class="w-full h-8">
         <h1 class="text-3xl font-bold ml-11 mt-5">リクエスト一覧</h1>
     </head>
-    <div class="m-2 md:m-8 lg:m-10">
+    <div class="m-1 sm:m-3 md:m-8 lg:m-10">
     @foreach ($proposals as $proposal)
         <div class="flex flex-col p-2 m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
             <div class="flex flex-row gap-5 items-center xl:gap-10">

@@ -3,13 +3,13 @@
         @include('layouts.navigation')
     @endif
     <div class="flex">
-        <div class="flex flex-1 items-center gap-x-3 p-6">
+        <div class="flex flex-1 items-center gap-x-3 py-1 px-6 sm:py-6">
             <div class=""><a href="/users/{{ $user->id }}">
                 <img
                  id="preview"
-                 src="{{ $user->profile_icon ? $user->profile_icon : asset('images/user_icon.png') }}"
+                 src="{{ $user->profile_icon }}"
                  alt=""
-                 class="w-16 h-16 rounded-full object-cover border-none bg-gray-200"></a>
+                 class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-none bg-gray-200"></a>
             </div>
             <div class="flex flex-col">
                 <div><h2 class="text-2xl">{{ $user->name}}</h2></div>
@@ -28,7 +28,11 @@
         </div>
         <div class="ml-auto mr-0 col-span-6 flex flex-wrap items-center text-base justify-end md:flex">
             @if(Auth::check() && $user->id == Auth::user()->id)
-            <a href="{{ route('profile.edit') }}"><button class="bg-blue-100 rounded py-1 mr-5 border border-indigo-300">プロフィールを編集</button></a>
+                <a href="{{ route('profile.edit') }}">
+                    <button class="text-xs sm:text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-3 border border-red-500 rounded">
+                        プロフィールを編集
+                    </button>
+                </a>
             @endif
         </div>
     </div>
@@ -37,7 +41,7 @@
         {{ $user->profile }}
     </div>
     <hr>
-    <div class="grid justify-center mt-5 mx-3 gap-1 grid-cols-3 md:grid-cols-4 gap-5 lg:grid-cols-5 md:m-8 lg:m-10">
+    <div class="grid justify-center mt-5 sm:mx-3 gap-1 grid-cols-3 md:grid-cols-4 sm:gap-5 lg:grid-cols-5 md:m-8 lg:m-10">
         @foreach($posts as $post)
            <div class="rounded border shadow-md">
                 <div class="relative rounded m-1 border shadow-md aspect-square overflow-hidden">
@@ -45,7 +49,7 @@
                     class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
-                    <p class="flex-auto text-base p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
+                    <p class="flex-auto text-xs sm:text-base p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
                 </div>
             </div>
        @endforeach

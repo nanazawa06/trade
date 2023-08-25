@@ -1,4 +1,5 @@
 <x-header>
+    @include('layouts.navigation')
     <head class="w-full h-8 bg-gray-300 my-3">
         <h1 class="text-2xl font-bold text-center md:text-3xl md:my-2">Profile</h1>
     </head>
@@ -23,4 +24,5 @@
             </div>
         </div>
     </div>
+    <script src='/js/app.js'></script>
 </x-header>
