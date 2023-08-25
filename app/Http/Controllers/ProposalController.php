@@ -55,29 +55,19 @@ class ProposalController extends Controller
         
         //リクエストが承諾されたときの処理
         //proposalsテーブルのstatusをdealingに変更する
-        if ($proposal->status == 'requesting'){
-            $proposal->status = 'dealing';
-            $proposal->save();
-            return view('posts.deal')->with([
-                'proposal' => $proposal,
-                'review_score' => $proposal->user->averageScore(),
-                ]);
-        }elseif ($request->has(['chat'])) {
-            //messageをchatsテーブルに保存
-            $input_chat = $request['chat'];
-            $proposal->chats()->create([
-                        'user_id' => $input_chat['user_id'],
-                        'message' => $input_chat['message'],
-                    ]);
-            return redirect("/posts/" . $proposal->id . "/deal");
-        }
+        $proposal->status = 'dealing';
+        $proposal->save();
+        return view('posts.deal')->with([
+            'proposal' => $proposal,
+            'review_score' => $proposal->user->averageScore(),
+            ]);
     }
     
     public function deleteProposal(Proposal $proposal)
     {
-        $proposal->status = 'rejected';
-        $proposal->save();
-        return redirec('/');
+        $proposal->images()->delete();
+        $proposal->delete();
+        return redirect('/');
     }
     
     public function showDealing(Proposal $proposal)

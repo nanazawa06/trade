@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('give_item');
             $table->string('want_item');
             $table->string('message')->nullable();
-            $table->enum('status', ['requesting', 'dealing', 'finished', 'rejected'])->default('requesting');
+            $table->enum('status', ['requesting', 'dealing', 'finished'])->default('requesting');
             $table->timestamps();
             $table->softDeletes();
         });
