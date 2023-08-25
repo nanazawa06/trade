@@ -37,6 +37,6 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('postChat.' . $this->chat->chattable_id);
+        return new Channel('postChat.' . $this->chat->chatable_id);
     }
 }
