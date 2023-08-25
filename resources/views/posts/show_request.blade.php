@@ -2,16 +2,16 @@
      <head class="w-full h-8 bg-gray-300 my-3">
         <h1 class="text-2xl font-bold text-center md:text-3xl md:my-2">リクエスト詳細</h1>
     </head>
-    <div class="flex flex-col items-center mx-3">
-        <div class="aspect-square max-w-2xl relative w-full bg-slate-50 md:">
+    <div class="flex flex-col items-center mx-1 sm:mx-3">
+        <div class="aspect-square max-w-2xl relative w-full bg-slate-100 md:">
               <img src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めませんでした" id="big-image" 
                 class="main-image absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" loading="lazy" />
         </div>
   
-      <div class="grid grid-cols-4 gap-1 w-full mx-3 md:w-2/3 xl:w-3/6">
+      <div class="grid grid-cols-4 gap-1 w-full md:w-2/3 xl:w-3/6">
         @if ($proposal->images()->first())
             @foreach ($proposal->images as $image)
-                <div class="relative aspect-square h-full w-full mx-auto bg-glay-100 rounded-5">
+                <div class="relative aspect-square h-full w-full mx-auto bg-slate-100 rounded-5">
                     <img src="{{ $image->image_url }}" class="sub-image absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-100" loading="lazy" />
                 </div>
             @endforeach
