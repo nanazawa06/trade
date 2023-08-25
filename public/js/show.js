@@ -43786,6 +43786,7 @@ jquery__WEBPACK_IMPORTED_MODULE_2___default()(function () {
       //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
       url: '/posts/like',
       method: 'POST',
+      timeout: 3000,
       data: {
         //サーバーに送信するデータ
         'post_id': likePostId //いいねされた投稿のidを送る
@@ -43829,15 +43830,11 @@ message_form.addEventListener('submit', function (e) {
     },
     url: '/posts/' + post_id + '/chat',
     method: 'POST',
-    timeout: 10000,
+    timeout: 3000,
     data: {
       'message': message
     }
   }).done(function (data) {
-    if (data.profile_icon === null) {
-      data.profile_icon = '/images/user_icon.png'; // 画像パス
-    }
-
     message_el.innerHTML += '<div class="col-start-2 col-end-13 py-1 rounded-lg">' + '<div class="flex items-center justify-start flex-row-reverse">' + '<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">' + '<a href="/users/' + data.user_id + '">' + '<img src="' + data.profile_icon + '"' + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">' + '</a>' + '</div>' + '<div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">' + '<div>' + data.message + '</div>' + '</div>' + '</div>' + '</div>';
     scrollToEnd(chat_board);
     jquery__WEBPACK_IMPORTED_MODULE_2___default()(message_input).val('');

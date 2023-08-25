@@ -43690,22 +43690,19 @@ message_form.addEventListener('submit', function (e) {
     alert("メッセージを入力してください");
     return;
   }
+  var socket_id = window.Echo.socketId();
   jquery__WEBPACK_IMPORTED_MODULE_2___default().ajax({
     headers: {
-      'X-CSRF-TOKEN': jquery__WEBPACK_IMPORTED_MODULE_2___default()('meta[name="csrf-token"]').attr('content')
+      'X-CSRF-TOKEN': jquery__WEBPACK_IMPORTED_MODULE_2___default()('meta[name="csrf-token"]').attr('content'),
+      'X-Socket-ID': socket_id
     },
-    //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
-    url: '/posts/' + proposal_id + '/deal/chat',
+    url: '/posts/' + proposal_id + '/chat',
     method: 'POST',
-    timeout: 10000,
+    timeout: 3000,
     data: {
       'message': message
     }
   }).done(function (data) {
-    if (data.profile_icon === null) {
-      data.profile_icon = '/images/user_icon.png'; // 画像パス
-    }
-
     message_el.innerHTML += '<div class="col-start-2 col-end-13 py-1 rounded-lg">' + '<div class="flex items-center justify-start flex-row-reverse">' + '<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">' + '<a href="/users/' + data.user_id + '">' + '<img src="' + data.profile_icon + '"' + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">' + '</a>' + '</div>' + '<div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">' + '<div>' + data.message + '</div>' + '</div>' + '</div>' + '</div>';
     jquery__WEBPACK_IMPORTED_MODULE_2___default()(message_input).val('');
     console.log('success');
@@ -43713,12 +43710,8 @@ message_form.addEventListener('submit', function (e) {
     console.log('fail');
   });
 });
-window.Echo.channel("proposalChat.".concat(proposal_id)).listen('MessageSent', function (e) {
-  if (e.user.profile_icon === null) {
-    e.user.profile_icon = '/images/user_icon.png'; // 画像パス
-  }
-
-  message_el.innerHTML += '<div class="col-start-1 col-end-12 py-1 rounded-lg">' + '<div class="flex flex-row items-cente">' + '<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">' + '<a href="/users/"' + e.user.id + '>' + '<img src="' + e.user.profile_icon + '"' + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">' + '</a>' + '</div>' + '<div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">' + '<div>' + e.chat.message + '</div>' + '</div>' + '</div>' + '</div>';
+window.Echo.channel("proposalChat.".concat(proposal_id)).listen('ProposalMessage', function (e) {
+  message_el.innerHTML += '<div class="col-start-1 col-end-12 py-1 rounded-lg">' + '<div class="flex flex-row items-cente">' + '<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">' + '<a href="/users/"' + e.chat.user.id + '>' + '<img src="' + e.chat.user.profile_icon + '"' + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">' + '</a>' + '</div>' + '<div class="relative ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">' + '<div>' + e.chat.message + '</div>' + '</div>' + '</div>' + '</div>';
 });
 })();
 
