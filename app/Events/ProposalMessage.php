@@ -35,6 +35,6 @@ class ProposalMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('proposalChat.' . $this->$chat->chatable_id);
+        return new Channel('proposalChat.' . $this->chat->chatable_id);
     }
 }

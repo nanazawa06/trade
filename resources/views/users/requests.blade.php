@@ -6,8 +6,8 @@
     <div class="m-2 md:m-8 lg:m-10">
     @foreach ($proposals as $proposal)
         <div class="flex flex-col p-2 m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
-            <div class="flex flex-row gap-5 items-center relative xl:gap-10">
-              <div class="w-1/5 aspect-square flex-shrink-0 " style="min-width:100px;">
+            <div class="flex flex-row gap-5 items-center xl:gap-10">
+              <div class="w-1/5 aspect-square flex-shrink-0 relative" style="min-width:100px;">
                 <a href="/posts/requests/{{ $proposal->id }}">
                   <img class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
                 </a>
@@ -45,7 +45,7 @@
                     <p class="text-xs text-gray-800 font-semibold md:text-lg lg:text-xl">譲：{{ $proposal->give_item }}</p>
                     </a>
               </div>
-              <form action="/posts/{{ $proposal->id }}/deal" method="POST" class="text-right">
+              <form action="/posts/{{ $proposal->id }}/deal" method="POST" class="ml-auto mt-auto">
                   @csrf
                   @method('PUT')
                   <input type="hidden" name="user_id" value="{{ $proposal->user_id }}">

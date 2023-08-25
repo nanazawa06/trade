@@ -6,8 +6,8 @@
     <div class="grid grid-rows grid-gap-4 m-5">
         @foreach ($dealings as $proposal)
             <div class="flex flex-col p-2 m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
-                <div class="flex flex-row gap-5 items-center relative xl:gap-10">
-                  <div class="w-1/5 aspect-square flex-shrink-0 " style="min-width:100px;">
+                <div class="flex flex-row gap-5 items-center xl:gap-10">
+                  <div class="w-1/5 aspect-square flex-shrink-0 relative" style="min-width:100px;">
                     <a href="/posts/{{ $proposal->id }}/deal">
                       <img class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
                     </a>

@@ -70,12 +70,14 @@ class ProposalController extends Controller
                         'message' => $input_chat['message'],
                     ]);
             return redirect("/posts/" . $proposal->id . "/deal");
-        }else{
-            //取引がキャンセルされたときの処理
-            $proposal->status = 'rejected';
-            $proposal->save();
-            return redirect('/');
         }
+    }
+    
+    public function deleteProposal(Proposal $proposal)
+    {
+        $proposal->status = 'rejected';
+        $proposal->save();
+        return redirec('/');
     }
     
     public function showDealing(Proposal $proposal)
