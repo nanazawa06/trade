@@ -38,7 +38,7 @@
     </div>
     <hr>
     <div class="grid justify-center mt-5 mx-3 gap-1 grid-cols-3 md:grid-cols-4 gap-5 lg:grid-cols-5 md:m-8 lg:m-10">
-        @foreach($user->posts as $post)
+        @foreach($posts as $post)
            <div class="rounded border shadow-md">
                 <div class="relative rounded m-1 border shadow-md aspect-square overflow-hidden">
                     <a href="/posts/{{ $post->id }}"><img src="{{ $post->images[0]->image_url }}"
