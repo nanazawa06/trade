@@ -18,6 +18,6 @@ use App\Models\Post;
 //Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 //    return (int) $user->id === (int) $id;
 //});
-Broadcast::channel('postChat.{postId}', function ($user=null, $postId) {
+Broadcast::channel('postChat.{postId}', function ($postId, $user=null) {
     return true;
 });
