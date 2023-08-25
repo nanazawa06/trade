@@ -32,7 +32,7 @@ class Proposal extends Model
         $proposals = collect();
         foreach ($posts as $post)
         {
-            $proposals = $proposals->merge($post->proposals);
+            $proposals = $proposals->merge($post->proposals()->with(['images', 'user'])->get());
         }
         return $proposals->filter(function($proposal){return $proposal->status == 'requesting';})->sortByDesc('created_at');
     }
@@ -45,12 +45,12 @@ class Proposal extends Model
         foreach (Auth::user()->posts as $post)
         {
             //自分の出品で取引中のものを取得
-            $dealingRequested = $this->where('post_id', $post->id)->where('status', 'dealing')->get();
+            $dealingRequested = $this->where('post_id', $post->id)->where('status', 'dealing')->with(['images', 'user'])->get();
             
             $proposals = $proposals->merge($dealingRequested);
         }
         //他ユーザーの出品で取引中のものを取得
-        $dealingRequest = $this->where('user_id', $user_id)->where('status', 'dealing')->get();
+        $dealingRequest = $this->where('user_id', $user_id)->where('status', 'dealing')->with(['images', 'user'])->get();
 
         return $proposals->merge($dealingRequest);
     }

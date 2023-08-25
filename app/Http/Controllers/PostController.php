@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    //出品一覧を表示
     public function index(Request $request)
     {
         $wants = $request->input('want');
@@ -31,21 +32,24 @@ class PostController extends Controller
            ]);
     }
     
+    //出品詳細画面を表示
      public function show(Post $post)
     {
-        return view('posts.show')->with([
+        return view('posts.$show')->with([
             'post' => $post,
             'likes' => $post->likes()->count(),
             'review_score' => $post->user->averageScore()
             ]);
     }
-
+    
+    //出品作成画面を表示
     public function create()
     {
         $state = State::all();
         return view('posts.create')->with(['states' => $state]);
     }
-
+    
+    //出品する
     public function store(PostRequest $request)
     {
         $post = new Post();
@@ -76,7 +80,7 @@ class PostController extends Controller
             $want = Item::firstOrCreate(['name' => $item_name]);
             $post->wants()->attach($want->id);
         }
-        
+        //譲るグッズ一覧をitemsテーブルに保存
         $gives = $request['gives'];
         foreach ($gives as $item_name)
         {
@@ -86,6 +90,7 @@ class PostController extends Controller
         return redirect('/posts/' . $post->id);
     }
     
+    //編集画面を表示
     public function edit(Post $post)
     {
         $states = State::all();
@@ -103,8 +108,8 @@ class PostController extends Controller
                 'description' => 'nullable|max:500',
                 'state_id' => 'required',
                 'images.*' => 'mimes:jpg,png,gif|required|min:1',
-                'gives.*' => 'required|max:30',
-                'wants.*' => 'required|max:30',
+                'gives.*' => 'required|max:50',
+                'wants.*' => 'required|max:50',
                 ]);
             //user_idとdescriptionをpostsテーブルに保存
             $post->description = $request->input('description');
@@ -135,16 +140,15 @@ class PostController extends Controller
                 $want = Item::firstOrCreate(['name' => $item_name]);
                 $wantIds[] = $want->id;
             }
-            
             $post->wants()->sync($wantIds);
             
+            //譲るグッズ一覧をitemsテーブルに保存
             $gives = $request['gives'];
             $giveIds = [];
             foreach ($gives as $item_name) {
                 $give = Item::firstOrCreate(['name' => $item_name]);
                 $giveIds[] = $give->id;
             }
-            
             $post->gives()->sync($giveIds);
             
         }elseif ($post->status == 'trading'){
@@ -195,6 +199,7 @@ class PostController extends Controller
         return redirect('/');
     }
     
+    //いいね（ハートマーク）が押されるとlikesテーブルに保存
     public function like(Request $request)
     {
         

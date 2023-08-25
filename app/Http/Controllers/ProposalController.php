@@ -9,6 +9,7 @@ use Cloudinary;
 
 class ProposalController extends Controller
 {
+    //リクエスト一覧の表示
     public function indexRequests()
     {
         $proposal = new Proposal();
@@ -16,6 +17,7 @@ class ProposalController extends Controller
         return view('users.requests')->with(['proposals' => $proposal->getProposals($user_id)]);
     }
     
+    //トレードリクエストを送る
     public function storeRequest(Request $request)
     {
         $proposal = new Proposal();
@@ -28,11 +30,11 @@ class ProposalController extends Controller
         
         $proposal->fill($input_request)->save();
         
+        // Imageモデルに画像を保存
         if ($request->hasFile('images')){
             $images = $request->file('images');
             foreach ($images as $image) {
                  $image_url = Cloudinary::upload($image->getRealPath())->getSecurePath();
-                // Imageモデルにデータを保存
                 $proposal->images()->create([
                     'image_url' => $image_url,
                     ]);
@@ -42,6 +44,7 @@ class ProposalController extends Controller
         return redirect('/');
     }
     
+    //リクエスト詳細を表示
     public function showRequest(Proposal $proposal)
     {
         return view('posts.show_request')->with([
@@ -52,7 +55,6 @@ class ProposalController extends Controller
     
     public function updateDeal(Proposal $proposal, Request $request)
     {
-        
         //リクエストが承諾されたときの処理
         //proposalsテーブルのstatusをdealingに変更する
         $proposal->status = 'dealing';
@@ -63,6 +65,7 @@ class ProposalController extends Controller
             ]);
     }
     
+    //取引をキャンセルされるとリクエストを削除
     public function deleteProposal(Proposal $proposal)
     {
         $proposal->images()->delete();
@@ -70,6 +73,7 @@ class ProposalController extends Controller
         return redirect('/');
     }
     
+    //取引画面を表示
     public function showDealing(Proposal $proposal)
     {
         return view('posts.deal')->with([
@@ -78,6 +82,7 @@ class ProposalController extends Controller
             ]);
     }
     
+    //取引中一覧を表示
     public function indexDealing()
     {
         $proposal = new Proposal();

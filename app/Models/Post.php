@@ -27,7 +27,7 @@ class Post extends Model
         
     public function getLatest($wants=null, $gives=null, $area=null, $limit_count = 20)
     {
-        $query = Post::with('images')->where('status', 'trading')->orderBy('created_at', 'DESC');
+        $query = Post::with(['images', 'gives', 'wants'])->where('status', 'trading')->orderBy('created_at', 'DESC');
 
         if ($area) {
             $query->where('area_id', $area);
