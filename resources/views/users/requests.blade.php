@@ -50,7 +50,7 @@
                   @method('PUT')
                   <input type="hidden" name="user_id" value="{{ $proposal->user_id }}">
                   <div class="text-center mt-2">
-                    <input type=submit value="承諾する" class="px-2 py-1 text-xs absolute right-2 bottom-1 md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
+                    <input type=submit value="承諾する" class="px-2 py-1 text-xs md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
                   </div>
               </form>
            </div>
