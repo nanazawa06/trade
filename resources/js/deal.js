@@ -37,7 +37,7 @@ message_form.addEventListener('submit' ,function (e) {
         'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content'),
         'X-Socket-ID' : socket_id
       },
-      url: '/posts/'+ proposal_id + '/chat',
+      url: '/posts/'+ proposal_id + '/deal/chat',
       method: 'POST',
       timeout: 3000,
       data:{
@@ -47,19 +47,18 @@ message_form.addEventListener('submit' ,function (e) {
     
     .done(function (data) {
         message_el.innerHTML += 
-                '<div class="col-start-2 col-end-13 py-1 rounded-lg">'
-                +'<div class="flex items-center justify-start flex-row-reverse">'
-                    +'<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">'
-                      + '<a href="/users/' + data.user_id + '">'
-                       + '<img src="' + data.profile_icon + '"'
-                        + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">'
-                       + '</a>'
-                    + '</div>'
-                    + '<div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">'
-                     + '<div>' + data.message + '</div>'
-                    + '</div>'
-                 + '</div>'
-            +'</div>';
+                `<div class="col-start-2 col-end-13 py-1 rounded-lg">
+                <div class="flex items-center justify-start flex-row-reverse">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                      <a href="/users/${data.user_id}">
+                       <img src="${data.profile_icon}" class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
+                       </a>
+                    </div>
+                    <div class="relative mr-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                     <div>${data.message}</div>
+                    </div>
+                 </div>
+            </div>`;
         $(message_input).val('');
         console.log('success');
     })
@@ -72,18 +71,17 @@ message_form.addEventListener('submit' ,function (e) {
 window.Echo.channel(`proposalChat.${proposal_id}`)
     .listen('ProposalMessage', (e) =>{
             message_el.innerHTML += 
-            '<div class="col-start-1 col-end-12 py-1 rounded-lg">'
-                +'<div class="flex flex-row items-cente">'
-                    +'<div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">'
-                      + '<a href="/users/"' + e.chat.user.id + '>'
-                       + '<img src="' + e.chat.user.profile_icon + '"'
-                        + 'class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">'
-                       + '</a>'
-                    + '</div>'
-                    + '<div class="relative ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">'
-                     + '<div>' + e.chat.message + '</div>'
-                    + '</div>'
-                 + '</div>'
-            +'</div>';
+            `<div class="col-start-1 col-end-12 py-1 rounded-lg">
+                <div class="flex flex-row items-cente">
+                    <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
+                      <a href="/users/${e.chat.user.id}">
+                       <img src="${e.chat.user.profile_icon}" class="w-10 h-10 rounded-full object-cover border-none bg-gray-200">
+                       </a>
+                    </div>
+                    <div class="relative ml-3 text-sm bg-indigo-100 py-2 px-4 shadow rounded-xl">
+                     <div>${e.chat.message}</div>
+                    </div>
+                 </div>
+            </div>`;
             
         });

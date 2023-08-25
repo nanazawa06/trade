@@ -41,7 +41,7 @@ class ChatController extends Controller
                     'message' => $message,
                 ]);
         
-        broadcast(new ProposalMessage($proposal))->toOthers();
+        broadcast(new ProposalMessage($chat))->toOthers();
         $param = [
             'user_id' => $user_id,
             'profile_icon' => $profile_icon,

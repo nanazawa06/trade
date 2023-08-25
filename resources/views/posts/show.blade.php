@@ -117,7 +117,7 @@
                         @if (!Auth::check() || $chat->user_id != Auth::user()->id)
                           <div class="col-start-1 col-end-12 py-1 rounded-lg">
                               <div class="flex flex-row items-center">
-                                <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                                <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
                                   <a href="/users/{{ $chat->user_id }}">
                                   <img
                                    src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"

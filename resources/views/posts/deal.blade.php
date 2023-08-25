@@ -41,7 +41,7 @@
                     @if (!Auth::check() || $chat->user_id != Auth::user()->id)
                       <div class="col-start-1 col-end-12 py-1 rounded-lg">
                           <div class="flex flex-row items-center">
-                            <div class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0">
+                            <div class="flex items-center justify-center h-10 w-10 rounded-full flex-shrink-0">
                               <a href="/users/{{ $chat->user_id }}">
                               <img
                                src="{{ $chat->user->profile_icon ? $chat->user->profile_icon : asset('images/user_icon.png') }}"
@@ -193,7 +193,9 @@
               ></textarea>
           </div>
           <div class="flex flex-col items-center">
-            <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit">取引を終了する</button>
+            <button type="submit" class="text-white bg-purple-500 hover:bg-purple-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 max-w-fit">
+              取引を終了する
+              </button>
           </div>
           <input type="hidden" name="review[proposal_id]" value="{{ $proposal->id }}">
           <input type="hidden" name="review[sender_id]" value="{{ Auth::user()->id }}">
@@ -201,8 +203,11 @@
       </form>
       <form action="/posts/{{ $proposal->id }}/deal" method="POST" class="mx-4 my-2 flex flex-col items-center">
           @csrf
-          @method('PUT')
-        <button type="submit" id="requestBtn" class="text-white bg-gray-500 hover:bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">キャンセル</button>
+          @method('DELETE')
+        <button type="submit" id="requestBtn"
+        class="text-white bg-gray-500 hover:bg-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          キャンセル
+        </button>
       </form>
       </div>
     </div>

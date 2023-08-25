@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Broadcast;
 use App\Models\Chat;
 use App\Models\Post;
+use App\Models\Proposal;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +20,8 @@ use App\Models\Post;
 //    return (int) $user->id === (int) $id;
 //});
 Broadcast::channel('postChat.{postId}', function ($postId, $user=null) {
+    return true;
+});
+Broadcast::channel('proposalChat.{proposalId}', function ($proposalId, $user=null) {
     return true;
 });

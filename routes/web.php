@@ -49,6 +49,7 @@ Route::controller(ProposalController::class)->middleware(['auth'])->group(functi
     Route::get('/posts/requests/{proposal}', 'showRequest')->name('show.request');
     Route::get('/users/deals', 'indexDealing')->name('index.deals'); 
     Route::get('/posts/{proposal}/deal', 'showDealing')->name('dealing');
+    Route::delete('/posts/{proposal}/deal', 'deleteProposal')->name('delete.proposal');
     Route::put('/posts/{proposal}/deal', 'updateDeal')->name('update.deal');
     Route::post('/users/requests', 'storeRequest')->name('store.request');
 });
