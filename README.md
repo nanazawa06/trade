@@ -17,33 +17,42 @@
 
 ## ER図
 ![GoodsTrade_ER](https://github.com/nanazawa06/trade/assets/135312995/9d76f5dc-a2ee-4197-a13b-f6113dca6cfb)
-
-
-
-
-
+テーブル概要
+- users：登録したユーザー情報を保存
+- areas：ユーザーの所在地を都道府県で保存
+- posts：ユーザーの出品
+- reviews：取引終了後の相互評価
+- likes：ユーザーは出品に対していいねを送れ、自身のいいね一覧を見れる
+- images：postsテーブルとproposalsテーブルの画像を保存するポリモーフィックリレーション
+- gives：出品に含まれる譲るグッズ名を保存
+- wants：出品に含まれる欲しいグッズ名を保存
+- states：出品物の状態
+- proposals：トレードリクエスト情報
+- chats：postsテーブルとproposalsテーブルのチャットを保存するポリモーフィックリレーション
 
 ## 機能
 - CRUD
 - ログイン機能＆Googleログイン
 - 出品機能
 - 検索機能
-- チャット機能
+- リアルタイムチャット機能
 - ユーザー評価機能
 - いいね機能
 - ユーザープロフィールの編集、閲覧
 
 ## 開発環境
 <b>言語：</b><br>
-- PHP
-- HTML
+- PHP (8.0.2)
+- HTML 
 - CSS(SCSS)
 - TailwindCss
 - JavaScript
 - jQuery
+- laravel/breeze (1.19)
+- laravel/socialite (5.8)
 
 <b>環境：</b><br>
-- Laravel(ver.6)
+- Laravel(9)
 - AWS(EC2＋Cloud9)
 - MySQL(MariaDB)
 - Github
@@ -54,6 +63,7 @@
 <b>API：</b><br>
 - Cloudinary
 - Google API
+- Pusher
 
 ## 今後の予定
 - 画像投稿機能のアップデート（編集ができるように）
