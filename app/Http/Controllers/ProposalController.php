@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Proposal;
 use Illuminate\Support\Facades\Auth;
 use Cloudinary;
+use App\Notifications\RequestNotification;
 
 class ProposalController extends Controller
 {
@@ -40,6 +41,8 @@ class ProposalController extends Controller
                     ]);
                 }
         }
+        $requested_user = $proposal->post->user;
+        $requested_user->notify(new RequestNotification($proposal));
         
         return redirect('/');
     }
@@ -88,4 +91,5 @@ class ProposalController extends Controller
         $proposal = new Proposal();
         return view('users.dealing')->with(['dealings' => $proposal->getDealings()]);
     }
+
 }

@@ -31,22 +31,6 @@ class User extends Authenticatable
         'profile',
         'profile_icon'
     ];
-    
-    //ユーザー評価の平均値を取得
-    public function averageScore()
-    {
-        $sum = 0;
-        $reviews = $this->receive_reviews;
-        $count = $reviews->count();
-        
-        return $count > 0 ? $reviews->avg('score') : 0;
-    }
-    
-    //ユーザーの出品を取得
-    public function getUserPosts()
-    {
-        return $this->posts()->with(['images', 'wants'])->orderBy('created_at', 'DESC')->get();
-    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -65,6 +49,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    //ユーザー評価の平均値を取得
+    public function averageScore()
+    {
+        $sum = 0;
+        $reviews = $this->receive_reviews;
+        $count = $reviews->count();
+        
+        return $count > 0 ? $reviews->avg('score') : 0;
+    }
+    
+    //ユーザーの出品を取得
+    public function getUserPosts()
+    {
+        return $this->posts()->with(['images', 'wants'])->orderBy('created_at', 'DESC')->get();
+    }
+    
+    public function routeNotificationForMail()
+    {
+        return $this->email; // ユーザーのメールアドレスを返す
+    }
     
     public function area()
     {

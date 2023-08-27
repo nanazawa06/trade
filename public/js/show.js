@@ -43830,7 +43830,7 @@ message_form.addEventListener('submit', function (e) {
     },
     url: '/posts/' + post_id + '/chat',
     method: 'POST',
-    timeout: 3000,
+    timeout: 10000,
     data: {
       'message': message
     }
