@@ -9,7 +9,6 @@ use App\Models\Post;
 use App\Models\Proposal;
 use Illuminate\Support\Facades\Auth;
 
-
 class ChatController extends Controller
 {
     public function sendMessage(Request $request, Post $post)
@@ -23,6 +22,7 @@ class ChatController extends Controller
                 ]);
         
         broadcast(new MessageSent($chat))->toOthers();
+        
         $param = [
             'user_id' => $user_id,
             'profile_icon' => $profile_icon,
@@ -42,6 +42,7 @@ class ChatController extends Controller
                 ]);
         
         broadcast(new ProposalMessage($chat))->toOthers();
+        
         $param = [
             'user_id' => $user_id,
             'profile_icon' => $profile_icon,
