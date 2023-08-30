@@ -21,10 +21,7 @@ use App\Http\Controllers\ChatController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('posts.index');
-});
-*/
+
 Route::get('/', [PostController::class, 'index'])->name('index');
 
 Route::controller(PostController::class)->middleware(['auth'])->group(function(){
