@@ -44,9 +44,6 @@ class ProposalController extends Controller
         $requested_user = $proposal->post->user;
         $requested_user->notify(new RequestNotification($proposal));
         
-        // 10日後に "DeleteRequestingProposal" ジョブを実行するようスケジュールする
-        //DeleteRequestingProposal::dispatch($proposal)->delay(now()->addMinutes(2));//addDays(10));
-        
         return redirect('/');
     }
     
