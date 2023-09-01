@@ -7,6 +7,7 @@ use App\Models\Proposal;
 use Illuminate\Support\Facades\Auth;
 use Cloudinary;
 use App\Notifications\RequestNotification;
+use App\Notifications\RequestReceivedNotification;
 
 class ProposalController extends Controller
 {
@@ -41,6 +42,7 @@ class ProposalController extends Controller
                     ]);
                 }
         }
+        //リクエストを受け取ったユーザーにメールで通知する
         $requested_user = $proposal->post->user;
         $requested_user->notify(new RequestNotification($proposal));
         
@@ -62,6 +64,11 @@ class ProposalController extends Controller
         //proposalsテーブルのstatusをdealingに変更する
         $proposal->status = 'dealing';
         $proposal->save();
+        
+        //リクエストを送ったユーザーにメールで通知する
+        $request_user = Auth::user;
+        $request_user->notify(new RequestReceivedNotification($proposal));
+        
         return view('posts.deal')->with([
             'proposal' => $proposal,
             'review_score' => $proposal->user->averageScore(),

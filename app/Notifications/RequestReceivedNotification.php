@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Proposal;
 
-class RequestNotification extends Notification
+class RequestReceivedNotification extends Notification
 {
     use Queueable;
 
@@ -43,12 +44,8 @@ class RequestNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('トレードリクエストを受け取りました')
-                    ->line('欲しいグッズ：' . $this->proposal->want_item)
-                    ->line('譲りたいグッズ：' . $this->proposal->give_item)
-                    ->line('メッセージ')
-                    ->line($this->proposal->message ? $this->proposal->message : null)
-                    ->action('トレードリクエストを表示', url('/posts/requests/'.$this->proposal->id));
+                    ->line('トレードリクエストが了承されました')
+                    ->action('取引画面を表示', url('/posts/' .$this->proposal->id .'/deal'));
     }
 
     /**
