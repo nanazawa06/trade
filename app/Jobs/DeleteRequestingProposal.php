@@ -32,7 +32,7 @@ class DeleteRequestingProposal implements ShouldQueue
     public function handle()
     {
         $proposals = Proposal::where('status', 'requesting')
-        //->where('created_at', '<=', now()->subDays(10))
+        ->where('created_at', '<=', now()->subDays(10))
         ->get();
         
         foreach($proposals as $proposal){

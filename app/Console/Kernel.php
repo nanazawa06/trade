@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new DeleteRequestingProposal())->everyMinute();
+        $schedule->job(new DeleteRequestingProposal())->daily();
     }
 
     /**
