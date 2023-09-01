@@ -66,7 +66,7 @@ class ProposalController extends Controller
         $proposal->save();
         
         //リクエストを送ったユーザーにメールで通知する
-        $request_user = Auth::user;
+        $request_user = Auth::user();
         $request_user->notify(new RequestReceivedNotification($proposal));
         
         return view('posts.deal')->with([
