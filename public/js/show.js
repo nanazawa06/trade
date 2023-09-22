@@ -3189,7 +3189,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 
 window.Pusher = (pusher_js__WEBPACK_IMPORTED_MODULE_3___default());
-window.Pusher.logToConsole = true;
+window.Pusher.logToConsole = false;
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_2__["default"]({
   broadcaster: 'pusher',
   key: "afaba5547cfd36e0aa66",
@@ -43677,16 +43677,22 @@ var chat_board = document.getElementById("chat-board");
 function scrollToEnd(scrollBox) {
   scrollBox.scrollTop = scrollBox.scrollHeight;
 }
-scrollToEnd(chat_board);
+if (chat_board) {
+  scrollToEnd(chat_board);
+}
+console.log('image取得前');
 var mainImage = document.querySelector(".main-image");
 var fileInputs = document.querySelectorAll(".file");
 var subImages = document.querySelectorAll(".sub-image");
+console.log('image取得後');
 
 //小さい画像がクリックされると大きい画像をクリックされた画像に変更する
 subImages.forEach(function (image) {
   image.onclick = function (event) {
     event.preventDefault();
+    console.log('画像がクリックされた');
     mainImage.src = event.target.getAttribute('src');
+    console.log('画像変更');
   };
 });
 
@@ -43830,7 +43836,7 @@ message_form.addEventListener('submit', function (e) {
     },
     url: '/posts/' + post_id + '/chat',
     method: 'POST',
-    timeout: 10000,
+    timeout: 3000,
     data: {
       'message': message
     }

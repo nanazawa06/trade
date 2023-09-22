@@ -1,11 +1,11 @@
 <x-header>
     @include('layouts.navigation')
     <head class="w-full h-8">
-        <h1 class="text-3xl font-bold ml-11 mt-5">取引中</h1>
+        <h1 class="text-xl sm:text-3xl font-bold ml-11 mt-3 sm:mt-5">取引中</h1>
     </head>
-    <div class="grid grid-rows grid-gap-4 m-5">
+    <div class="m-1 sm:m-3 md:m-8 lg:m-10">
         @foreach ($dealings as $proposal)
-            <div class="flex flex-col p-2 m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
+            <div class="flex flex-col p-2 m-2 sm:m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
                 <div class="flex flex-row gap-5 items-center xl:gap-10">
                   <div class="w-1/5 aspect-square flex-shrink-0 relative" style="min-width:100px;">
                     <a href="/posts/{{ $proposal->id }}/deal">

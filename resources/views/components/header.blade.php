@@ -10,7 +10,7 @@
     </head>
     <header class="border-b border-slate-200">
       
-      <div class="px-4 py-5 mx-auto bg-gray-300 sm:max-w-full md:px-16 lg:px-8">
+      <div class="px-4 py-3 sm:py-5 mx-auto bg-gray-300 sm:max-w-full md:px-16 lg:px-8">
           <div class="relative flex items-center justify-between">
             <a href="/" aria-label="Company" title="Company" class="inline-flex items-center">
               <svg class="w-8 text-deep-purple-accent-400" viewBox="0 0 24 24" stroke-linejoin="round" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke="currentColor" fill="none">
