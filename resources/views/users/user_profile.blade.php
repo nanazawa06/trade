@@ -8,7 +8,6 @@
                 <img
                  id="preview"
                  src="{{ $user->profile_icon }}"
-                 alt=""
                  class="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover border-none bg-gray-200"></a>
             </div>
             <div class="flex flex-col">
@@ -26,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <div class="ml-auto mr-0 col-span-6 flex flex-wrap items-center text-base justify-end md:flex">
+        <div class="ml-auto mr-0 sm:mr-2 col-span-6 flex flex-wrap items-center text-base justify-end md:flex">
             @if(Auth::check() && $user->id == Auth::user()->id)
                 <a href="{{ route('profile.edit') }}">
                     <button class="text-xs sm:text-sm hover:bg-red-100 text-red-500 font-semibold hover:text-red-600 py-2 px-3 border border-red-500 rounded">
@@ -49,7 +48,7 @@
                     class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
-                    <p class="flex-auto text-xs sm:text-base p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
+                    <p class="text-xs font-bold sm:text-base px-1 pb-2 sm:p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
                 </div>
             </div>
        @endforeach

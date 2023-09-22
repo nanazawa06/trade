@@ -42,7 +42,7 @@ class Post extends Model
 
             // 単語をループで回し、wantsリレーション先のアイテム名と部分一致するものがあれば、$queryとして保持される
             foreach($wordArraySearched as $value) {
-                $query->whereHas('wants', function ($query) use ($value) {
+                $query->whereHas('gives', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }
@@ -52,7 +52,7 @@ class Post extends Model
             $spaceConversion = mb_convert_kana($gives, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
             foreach($wordArraySearched as $value) {
-                $query->whereHas('gives', function ($query) use ($value) {
+                $query->whereHas('wants', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }

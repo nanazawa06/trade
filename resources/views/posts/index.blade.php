@@ -40,7 +40,7 @@
                     class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" alt="画像が読み込めません。"/></a>
                 </div>
                 <div>
-                    <p class="flex-auto text-xs p-1 sm:text-base sm:p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
+                    <p class="flex-auto text-xs px-1 pb-2 sm:text-base sm:p-2"><a href="/posts/{{ $post->id }}">求：{{ $post->wants[0]->name }}</a></p>
                 </div>
             </div>
         @endforeach

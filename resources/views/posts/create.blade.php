@@ -2,13 +2,13 @@
     <div class="top-preview mx-auto max-w-2xl mt-5 lg:hidden"></div>
     <form class="mt-6 mx-2" action="/posts" method="POST" enctype="multipart/form-data">
       @csrf
-        <div class="mb-6 pt-4">
-            <label class="mt-3 mx-7 block text-xl font-semibold text-[#07074D]">
+        <div class="mb-6 sm:pt-4">
+            <label class="my-3 mx-7 block text-xl font-semibold text-[#07074D]">
               画像をアップロード
             </label>
             <div class="flex-1">
-              <div class="grid grid-cols-4 gap-1 md:gap-3 h-20 sm:h-40 md:h-52 lg:h-64 xl:h-96 mx-2 md:mx-8 xl:mx-11">
-                <div id="preview0" class="hidden"></div>
+              <div class="grid grid-cols-4 gap-1 md:gap-3 object-contain mx-2 md:mx-8 xl:mx-11">
+                <div id="preview0" class="hidden aspect-square bg-slate-100"></div>
                 <div class="upload-box0 relative grid grid-cols-1 mx-2 aspect-square">
                   <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                       <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
@@ -23,7 +23,7 @@
                   </div>
                 </div>
     
-                <div id="preview1" class="hidden"></div>
+                <div id="preview1" class="hidden aspect-square bg-slate-100"></div>
                 <div class="upload-box1 relative grid grid-cols-1 mx-2 aspect-square">
                   <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                       <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
@@ -38,7 +38,7 @@
                   </div>
                 </div>
     
-                <div id="preview2" class="hidden"></div>
+                <div id="preview2" class="hidden aspect-square bg-slate-100"></div>
                 <div class="upload-box2 relative grid grid-cols-1 mx-2 aspect-square">
                   <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                       <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
@@ -53,7 +53,7 @@
                   </div>
                 </div>
     
-                <div id="preview3" class="hidden"></div>
+                <div id="preview3" class="hidden aspect-square bg-slate-100"></div>
                 <div class="upload-box3 relative grid grid-cols-1 mx-2 aspect-square">
                   <div class='flex items-center justify-center w-full absolute top-0 left-0'>
                       <label class='flex flex-col border-4 border-dashed w-full aspect-square hover:bg-gray-100 hover:border-purple-300 group'>
@@ -81,10 +81,10 @@
                 @endforeach
               @enderror
           
-              <div class="flex-auto p-6">
+              <div class="flex-auto p-6 sm:px-7">
                 
                   <div class="flex flex-wrap gap-4">
-                      <div class="mb-5">
+                      <div class="sm:mb-5">
                           <label
                             for="want"
                             class="mb-3 block text-base font-medium text-[#07074D]"
@@ -95,7 +95,7 @@
                             type="text"
                             name="gives[]"
                             placeholder="譲りたいもの"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white sm:py-3 sm:px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                           />
                           @error('gives.*')
                             @foreach ($errors->get('gives.*') as $messages)
@@ -121,7 +121,7 @@
                             type="text"
                             name="wants[]"
                             placeholder="欲しいもの"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white sm:py-3 sm:px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                           />
                           @error('wants.*')
                             @foreach ($errors->get('wants.*') as $messages)
@@ -167,7 +167,7 @@
               </div>
         </div>
       </div>
-      <div class="bg-white max-w-4xl text-center mx-6" style="min-width:400px;">
+      <div class="bg-white max-w-4xl text-center mx-2 sm:px-7">
           <div class="overflow-x-auto border-x border-t">
               <table class="table-auto w-full">
                   <tbody>

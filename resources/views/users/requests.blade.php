@@ -1,12 +1,12 @@
 <x-header>
     @include('layouts.navigation')
     <head class="w-full h-8">
-        <h1 class="text-3xl font-bold ml-11 mt-5">リクエスト一覧</h1>
+        <h1 class="text-xl sm:text-3xl font-bold ml-11 mt-3 sm:mt-5">リクエスト一覧</h1>
     </head>
     <div class="m-1 sm:m-3 md:m-8 lg:m-10">
     @foreach ($proposals as $proposal)
-        <div class="flex flex-col p-2 m-5 text-lg font-semibold shadow-md border rounded-sm mx-6 xl:mx-24">
-            <div class="flex flex-row gap-5 items-center xl:gap-10">
+        <div class="flex flex-col p-2 my-2 sm:m-5 text-lg font-semibold shadow-md border rounded-sm xl:mx-24">
+            <div class="flex flex-row gap-2 sm:gap-5 items-center xl:gap-10">
               <div class="w-1/5 aspect-square flex-shrink-0 relative" style="min-width:100px;">
                 <a href="/posts/requests/{{ $proposal->id }}">
                   <img class="absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" src="{{ $proposal->images()->first() ? $proposal->images[0]->image_url : asset('images/no_image.jpg') }}" alt="画像が読み込めません。"/>
@@ -50,7 +50,7 @@
                   @method('PUT')
                   <input type="hidden" name="user_id" value="{{ $proposal->user_id }}">
                   <div class="text-center mt-2">
-                    <input type=submit value="承諾する" class="px-2 py-1 text-xs md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
+                    <input type=submit value="承諾" class="px-2 py-1 text-xs md:text-sm hover:bg-red-100 text-red-400 bg-p font-semibold hover:text-red-600 border border-red-500 rounded">
                   </div>
               </form>
            </div>

@@ -1,17 +1,17 @@
 <x-header>
     <div class="mx-1 pr-1 sm:pr-0 mt-3 sm:mt-5 sm:mx-3 md:mt-8 md:mx-5 lg:flex lg:mx-8 lg:justify-center lg:mx-5 lg:items-start"> 
-        <div class="grid grid-cols-4 gap-2 w-full mx-3 md:w-2/3 lg:w-1/2">
+        <div class="grid grid-cols-4 gap-2 w-full mx-auto md:w-2/3 lg:w-1/2">
             <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100">
                 <img src="{{ $post->images[0]->image_url }}" alt="画像が読み込めませんでした" id="main-image" 
                   class="main-image absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full z-0" loading="lazy" />
             </div>
             @foreach ($post->images as $image )
-              <div class="relative aspect-square h-full w-full mx-auto bg-glay-100 rounded-5">
+              <div class="relative aspect-square h-full w-full mx-auto bg-slate-100 rounded-5">
                   <img src="{{ $image->image_url }}" class="sub-image absolute max-w-full max-h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full bg-slate-100" loading="lazy" />
               </div>
             @endforeach
         </div>
-        <div class="flex flex-col items-center md:w-2/3 xl:w-2/5 lg:w-1/2">
+        <div class="mx-auto md:w-2/3 xl:w-2/5 lg:w-1/2">
             <ul class="flex items-center space-x-3 mr-auto mt-4 my-2">
               <li>
                   @auth
