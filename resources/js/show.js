@@ -20,19 +20,16 @@ if(chat_board){
     scrollToEnd(chat_board);
 }
 
-console.log('image取得前');
 const mainImage = document.querySelector(".main-image");
 const fileInputs = document.querySelectorAll(".file");
 const subImages = document.querySelectorAll(".sub-image");
-console.log('image取得後');
+
 
 //小さい画像がクリックされると大きい画像をクリックされた画像に変更する
 subImages.forEach(function(image){
     image.onclick = function(event) {
         event.preventDefault();
-        console.log('画像がクリックされた');
         mainImage.src = event.target.getAttribute('src');
-        console.log('画像変更');
         };
 });
 
