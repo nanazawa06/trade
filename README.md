@@ -15,6 +15,18 @@
 <img src="https://github.com/nanazawa06/trade/assets/135312995/2508e55f-98ce-4560-9c3b-5d5f38fdae6c" width="500"><br>
 <img src="https://github.com/nanazawa06/trade/assets/135312995/fb1ad5d7-124d-4db3-b9b3-59031b7c08f2" width="500"><br>
 
+アプリURL：<br>
+https://goodstrade-076f6cea715c.herokuapp.com/<br>
+
+デモアカウント<br>
+メールアドレス：testuser1@example.com<br>
+パスワード　　：password1<br>
+
+メールアドレス：testuser2@example.com<br>
+パスワード　　：password2<br>
+
+スマホでの利用が多いことを考え、レスポンシブデザインを心がけました。よければスマホでもアクセスしてみてください。
+
 ## ER図
 ![GoodsTrade_ER](https://github.com/nanazawa06/trade/assets/135312995/9d76f5dc-a2ee-4197-a13b-f6113dca6cfb)
 テーブル概要
