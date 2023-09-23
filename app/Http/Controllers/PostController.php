@@ -174,12 +174,12 @@ class PostController extends Controller
         $existingReview = Review::where('proposal_id', $input_review['proposal_id'])
                             ->where('sender_id', $input_review['sender_id'])
                             ->first();
-
+        
         if ($existingReview) {
             return redirect()->back()->with('error', 'レビューは投稿済みです');
         }
         
-        $proposal = Proposal::find($input_review['proposal_id'])->first();
+        $proposal = Proposal::find($input_review['proposal_id']);
         //取引中のユーザ両方がレビューを投稿したらステータスをfinishedにする
         $numOfReview = Review::where('proposal_id', $input_review['proposal_id'])->count();
         if ($numOfReview == 1){
@@ -193,6 +193,7 @@ class PostController extends Controller
         }else{
             $input_review['receiver_id'] = $proposal->user_id;
         }
+        
         $review = new Review();
         $review->fill($input_review)->save();
         
