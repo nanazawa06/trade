@@ -26,12 +26,12 @@ window.Pusher.logToConsole = false;
 
 window.Echo = new Echo({
      broadcaster: 'pusher',
-     key: process.env.MIX_PUSHER_APP_KEY,
-     cluster: process.env.MIX_PUSHER_APP_CLUSTER ?? 'ap3',
+     key: import.meta.env.VITE_PUSHER_APP_KEY,
+     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'ap3',
      //wsHost: import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
      //wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
      //wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
-     forceTLS: (process.env.MIX_PUSHER_SCHEME ?? 'https') === 'https',
+     forceTLS: true,
      //enabledTransports: ['ws', 'wss'],
-     encrypted: true,
+    // encrypted: true,
     });

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <x-header>
     <div class="m-1 sm:m-3 md:m-8 lg:m-10">
+        <div id="app"></div>
         <div class="serch">
             <form action="{{ route('index') }}" method=GET>
                 @csrf
@@ -49,5 +50,4 @@
             {{ $posts->links() }}
         </div>
     </div>
-    <script src='/js/app.js'></script>
 </x-header>

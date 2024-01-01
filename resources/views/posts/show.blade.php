@@ -1,4 +1,7 @@
 <x-header>
+<head>
+    @vite(['resources/js/show.jsx'])
+</head>
     <div class="mx-1 pr-1 sm:pr-0 mt-3 sm:mt-5 sm:mx-3 md:mt-8 md:mx-5 lg:flex lg:mx-8 lg:justify-center lg:mx-5 lg:items-start"> 
         <div class="grid grid-cols-4 gap-2 w-full mx-auto md:w-2/3 lg:w-1/2">
             <div class="col-start-1 col-end-5 relative aspect-square bg-slate-100">
@@ -350,6 +353,4 @@
           </div>
         </form>
     </div> 
-
-    <script src="/js/show.js"></script>
 </x-header>
