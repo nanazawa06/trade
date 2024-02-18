@@ -7,7 +7,7 @@
         <title>GoodsTrade</title>
         <!-- Fonts -->
         @viteReactRefresh
-        @vite(['resources/css/app.css', 'resources/js/app.jsx'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <header class="border-b border-slate-200">
       
@@ -96,7 +96,11 @@
             </div>
           </div>
         </div>    
-      
+        @if (isset($header))
+          <div class="w-full h-8">
+            <h1 class="text-xl sm:text-3xl font-bold ml-11 mt-3 sm:mt-5">{{ $header }}</h1>
+          </div>
+        @endif
     </header>
     <body>
         {{ $slot }}

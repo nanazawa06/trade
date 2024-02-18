@@ -1,17 +1,50 @@
 import './bootstrap';
-import ReactDOM from "react-dom/client";
 import Alpine from 'alpinejs';
+import $ from 'jquery';
 
 window.Alpine = Alpine;
 
+// マイグッズリストの作成・編集
+Alpine.data('mygoods', () => ({
+    init() {
+        fetch('/user/mygoods', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.itemList = data;
+            })
+            .catch(error => {
+                console.error('Error : ', error);
+            });
+    },
+    itemList : [],
+    newItem : '',
+    // リストから削除もしくは追加する（actionには'DELETE'か'POST'を指定）
+    updateMygoods(action, item) {
+        fetch('/user/mygoods', {
+            method: action,
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            },
+            body: JSON.stringify(item)
+        })
+        .then(response => response.json())
+        .then(data => {
+            this.itemList = data;
+            this.newItem = '';
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}));
+
 Alpine.start();
-
-function App() {
-    return <h1>Hello World</h1>;
-}
-
-const root = ReactDOM.createRoot(document.getElementById("app"));
-root.render(<App />);
 
 document.addEventListener('DOMContentLoaded', function() {
     const topPreview = document.querySelector(".top-preview");
@@ -74,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     deleteImage(image, uploadBox, preview);
                     input.value = '';
                     });
-                console.log('loading');
             };
             reader.readAsDataURL(file);
         };
@@ -82,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function() {
     //ボタンのdata-imageと同じsrcをもつ画像を親要素のdivと一緒に削除
     function deleteImage(image, uploadBox, preview) {
         const imageList = document.querySelectorAll(`img[src="${image}"]`);
-        console.log(imageList);
         imageList.forEach(function(element) {
             element.parentNode.remove();
         });
@@ -107,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     deleteButtons.forEach(function(btn){
         btn.onclick = function(){
-            console.log('button clicked');
             const previewElement = btn.parentElement.parentElement;
             btn.parentNode.remove();
             previewElement.classList.add("hidden");
