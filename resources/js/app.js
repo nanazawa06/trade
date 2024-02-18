@@ -1,10 +1,10 @@
 import './bootstrap';
 import Alpine from 'alpinejs';
 import $ from 'jquery';
-import { initial } from 'lodash';
 
 window.Alpine = Alpine;
 
+// マイグッズリストの作成・編集
 Alpine.data('mygoods', () => ({
     init() {
         fetch('/user/mygoods', {
@@ -23,6 +23,7 @@ Alpine.data('mygoods', () => ({
     },
     itemList : [],
     newItem : '',
+    // リストから削除もしくは追加する（actionには'DELETE'か'POST'を指定）
     updateMygoods(action, item) {
         fetch('/user/mygoods', {
             method: action,
@@ -41,15 +42,6 @@ Alpine.data('mygoods', () => ({
             console.error('Error:', error);
         });
     }
-    // add() {
-    //     if (this.newItem == '') return;
-    //     let newList = updateMygoods('POST', this.newItem);
-    //     this.newItem = '';
-    // },
-    // deleteItem(item) {
-    //     updateMygoods('DELETE', item);
-    //     // this.itemList = newList;
-    // }
 }));
 
 Alpine.start();
