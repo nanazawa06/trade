@@ -15,4 +15,10 @@ class UserController extends Controller
             'review_score' => $user->averageScore(),
             ]);
     }
+
+    public function showMygoods(User $user)
+    {
+        return view('users.my_items')->with([
+            'mygoods' => $user->mygoods]);
+    }
 }

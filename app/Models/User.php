@@ -13,6 +13,7 @@ use App\Models\Review;
 use App\Models\Chat;
 use App\Models\Proposal;
 use App\Models\Like;
+use App\Models\Mygoods;
 
 class User extends Authenticatable
 {
@@ -65,7 +66,7 @@ class User extends Authenticatable
     {
         return $this->posts()->with(['images', 'wants'])->orderBy('created_at', 'DESC')->get();
     }
-    
+
     public function routeNotificationForMail()
     {
         return $this->email; // ユーザーのメールアドレスを返す
@@ -99,5 +100,9 @@ class User extends Authenticatable
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+    public function mygoods()
+    {
+        return $this->hasMany(Mygoods::class);
     }
 }

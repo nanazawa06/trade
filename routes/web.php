@@ -9,18 +9,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ChatController;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
+use App\Http\Controllers\MygoodsController;
 
 Route::get('/', [PostController::class, 'index'])->name('index');
 
@@ -51,7 +40,14 @@ Route::controller(ProposalController::class)->middleware(['auth'])->group(functi
     Route::post('/users/requests', 'storeRequest')->name('store.request');
 });
     
+Route::get('/users/{user}/mygoods',  [UserController::class,'showMygoods'])->name('user.mygoods');
 Route::get('/users/{user}',  [UserController::class,'showUser'])->name('user_page');
+
+Route::controller(MygoodsController::class)->middleware(['auth'])->group(function(){
+    Route::post('user/mygoods', 'addMygoods');
+    Route::delete('user/mygoods', 'deleteMygoods');
+    Route::get('user/mygoods', 'getMygoods');
+});
 
 Route::get('/dashboard', function () {
     return view('/dashbord');

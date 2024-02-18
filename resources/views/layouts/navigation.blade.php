@@ -22,6 +22,9 @@
                     <x-nav-link :href="route('index.reviews')" :active="request()->routeIs('index.reviews')">
                         {{ __('レビュー') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('user.mygoods', ['user' => Auth::user()->id])" :active="request()->routeIs('user.mygoods')">
+                        {{ __('マイリスト') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -88,6 +91,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('index.reviews')" :active="request()->routeIs('index.reviews')">
                 {{ __('レビュー') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.mygoods', ['user' => Auth::user()->id])" :active="request()->routeIs('user.mygoods')">
+                {{ __('マイリスト') }}
             </x-responsive-nav-link>
         </div>
 
