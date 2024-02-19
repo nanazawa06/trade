@@ -31,6 +31,14 @@ class PostController extends Controller
            'areas' => $areas,
            ]);
     }
+
+    public function recommend()
+    {
+        $post = new Post();
+        return view('posts.recommend')->with([
+            'posts' => $post->getRecommends()
+        ]);
+    }
     
     //出品詳細画面を表示
      public function show(Post $post)

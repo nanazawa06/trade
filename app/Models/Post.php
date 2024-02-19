@@ -12,6 +12,7 @@ use App\Models\Proposal;
 use App\Models\State;
 use App\Models\Chat;
 use App\Models\Like;
+use Illuminate\Support\Facades\Auth;
 use Cloudinary;
 
 class Post extends Model
@@ -30,19 +31,21 @@ class Post extends Model
         $query = Post::with(['images', 'gives', 'wants'])->where('status', 'trading')->orderBy('created_at', 'DESC');
 
         if ($area) {
-            $query->where('area_id', $area);
+            $query = $query->whereHas('user', function ($query) use ($area) {
+                $query->where('area_id', $area);
+            });
         }
        // want検索フォームにキーワードが入力されたら
         if ($wants) {
             // 全角スペースを半角に変換
             $spaceConversion = mb_convert_kana($wants, 's');
 
-            // 単語を半角スペースで区切り、配列にする（例："山田 翔" → ["山田", "翔"]）
+            // 単語を半角スペースで区切り、配列にする
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
 
             // 単語をループで回し、wantsリレーション先のアイテム名と部分一致するものがあれば、$queryとして保持される
             foreach($wordArraySearched as $value) {
-                $query->whereHas('gives', function ($query) use ($value) {
+                $query = $query->whereHas('gives', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }
@@ -52,7 +55,7 @@ class Post extends Model
             $spaceConversion = mb_convert_kana($gives, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
             foreach($wordArraySearched as $value) {
-                $query->whereHas('wants', function ($query) use ($value) {
+                $query = $query->whereHas('wants', function ($query) use ($value) {
                        $query->where('name', 'like', '%'.$value.'%');
                    });
             }
@@ -60,7 +63,36 @@ class Post extends Model
         
         return $posts = $query->paginate($limit_count);
     }
+
+    // ユーザーのマイリストからそのグッズを求めている出品のリストを返す
+    public function getRecommends()
+    {
+        $mygoods = Auth::user()->mygoods()->pluck('name')->all();
+        $recommends = collect();
         
+        foreach($mygoods as $goods) {
+            $spaceConversion = mb_convert_kana($goods, 's');
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+            $query = Post::with(['images', 'gives', 'wants'])->where('status', 'trading')->orderBy('created_at', 'DESC');
+
+            foreach($wordArraySearched as $word) {
+                $query = $query->whereHas('wants', function($query) use ($word) {
+                    $query->where('name', 'like', '%'.$word.'%');
+                });
+            }
+
+            $recommends = $recommends->union($query->get());
+        }
+
+        return $recommends;
+    }
+        
+    //いいねされているかを判定するメソッド。
+    public function isLikedBy($user): bool 
+    {
+        return Like::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -93,10 +125,4 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
-    //いいねされているかを判定するメソッド。
-    public function isLikedBy($user): bool 
-    {
-        return Like::where('user_id', $user->id)->where('post_id', $this->id)->first() !==null;
-    }
-    
 }
