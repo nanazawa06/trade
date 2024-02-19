@@ -20,6 +20,7 @@ Route::controller(PostController::class)->middleware(['auth'])->group(function()
     Route::put('/posts/{post}', 'update')->name('update');
     Route::get('/posts/{post}/edit', 'edit')->name('edit');
     Route::post('/users/reviews', 'review')->name('review');
+    Route::get('/posts/recommend', 'recommend')->name('recommend');
 });
 Route::get('/posts/{post}', [PostController::class, 'show'])->name('show');
 
